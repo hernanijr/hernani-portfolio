@@ -81,11 +81,11 @@ Add a project entry to the `projects` array in `src/data/site.ts`. Provide its f
 
 ### Configure contact links
 
-Edit `siteConfig.links` in `src/data/site.ts`. GitHub is the only contact link currently configured. Add a professional channel only after it has been confirmed; do not render empty link values or placeholder contact information.
+Edit `siteConfig.links` in `src/data/site.ts`. Set `contact` only to a confirmed professional contact destination; when it is empty, the primary contact action is omitted and GitHub is shown as a profile link. GitHub remains available in the footer.
 
 ### Update the production domain
 
-The production URL appears in `astro.config.mjs`, `src/data/site.ts`, and `public/robots.txt`. Update all three together if the domain changes; canonical metadata, structured data, and the sitemap use the configured site URL.
+The production URL appears in `astro.config.mjs` and `src/data/site.ts`. Update both if the domain changes; canonical metadata, structured data, the sitemap, and generated `robots.txt` use the configured site URL.
 
 ## Analytics readiness
 

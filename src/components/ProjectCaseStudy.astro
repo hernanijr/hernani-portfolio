@@ -5,15 +5,19 @@ type Project = (typeof projects)[number];
 
 interface Props {
   project: Project;
+  index: number;
+  total: number;
 }
 
-const { project } = Astro.props;
+const { project, index, total } = Astro.props;
 ---
 
 <article class="project">
   <div class="project__masthead">
     <p class="eyebrow">{project.eyebrow}</p>
-    <span class="project__index" aria-hidden="true">01 / 01</span>
+    <span class="project__index" aria-hidden="true">
+      {String(index).padStart(2, '0')} / {String(total).padStart(2, '0')}
+    </span>
   </div>
   <div class="project__intro">
     <div>

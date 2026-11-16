@@ -5,6 +5,7 @@ export const siteConfig = {
   location: 'Belo Horizonte, Minas Gerais, Brasil',
   locale: 'pt-BR',
   links: {
+    contact: '' as string,
     github: 'https://github.com/hernanijr',
   },
 } as const;

@@ -12,9 +12,13 @@ import { siteConfig } from '../data/site';
       <a href="#about">Sobre</a>
       <a href="#services">Soluções</a>
       <a href="#projects">Projetos</a>
-      <a class="site-header__contact" href="#contact" data-analytics-event="contact_click">
-        Vamos conversar <span aria-hidden="true">↗</span>
-      </a>
+      {siteConfig.links.contact && (
+        <a
+          class="site-header__contact"
+          href={siteConfig.links.contact}
+          data-analytics-event="contact_click"
+        >Vamos conversar <span aria-hidden="true">↗</span></a>
+      )}
     </nav>
   </div>
 </header>

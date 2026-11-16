@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const readOutput = (path = '') => readFile(new URL(`../dist/${path}`, import.meta.url), 'utf8');
+const readOutputBytes = (path = '') => readFile(new URL(`../dist/${path}`, import.meta.url));
 
 test('build emits a Portuguese homepage with unique SEO metadata and canonical URL', async () => {
   const html = await readOutput('index.html');
@@ -12,8 +13,42 @@ test('build emits a Portuguese homepage with unique SEO metadata and canonical U
   assert.match(html, /<meta name="description" content="[^"]{50,}"/);
   assert.match(html, /<link rel="canonical" href="https:\/\/hernani\.dev\/"/);
   assert.match(html, /<meta property="og:title"/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/hernani\.dev\/og-image\.png"/);
+  assert.match(html, /<meta property="og:image:type" content="image\/png"/);
+  assert.match(html, /<meta property="og:image:width" content="1200"/);
+  assert.match(html, /<meta property="og:image:height" content="630"/);
+  assert.match(html, /<meta property="og:image:alt" content="Hernani — engenharia de software em Belo Horizonte\. Sites e software para problemas reais\."/);
   assert.match(html, /<meta name="twitter:card" content="summary_large_image"/);
+  assert.match(html, /<meta name="twitter:image" content="https:\/\/hernani\.dev\/og-image\.png"/);
+  assert.match(html, /<meta name="twitter:image:alt" content="Hernani — engenharia de software em Belo Horizonte\. Sites e software para problemas reais\."/);
   assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
+});
+
+test('contact action is omitted when unconfigured and GitHub is clearly a profile link', async () => {
+  const html = await readOutput('index.html');
+  const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+
+  assert.doesNotMatch(html, /data-analytics-event="contact_click"/);
+  assert.ok(
+    anchors.some(([, attributes, content]) =>
+      attributes.includes('href="https://github.com/hernanijr"') &&
+      content.includes('Visitar meu GitHub')
+    ),
+  );
+  assert.ok(
+    anchors.some(([, attributes, content]) =>
+      attributes.includes('href="https://github.com/hernanijr"') &&
+      content.includes('GitHub')
+    ),
+  );
+});
+
+test('project case study displays its position and count', async () => {
+  const html = await readOutput('index.html');
+  const indexLabels = [...html.matchAll(/<span class="project__index"[^>]*>([\s\S]*?)<\/span>/g)]
+    .map(([, content]) => content.replace(/\s+/g, ' ').trim());
+
+  assert.deepEqual(indexLabels, ['01 / 01']);
 });
 
 test('build includes the professional profile, required sections and real Talk BH attribution', async () => {
@@ -94,11 +129,17 @@ test('robots, sitemap and static social assets are emitted', async () => {
     readOutput('sitemap.xml'),
   ]);
   const html = await readOutput('index.html');
+  const siteSource = await readFile(new URL('../src/data/site.ts', import.meta.url), 'utf8');
+  const domain = siteSource.match(/domain: '([^']+)'/)?.[1];
 
   assert.match(robots, /Allow: \//);
-  assert.match(robots, /Sitemap: https:\/\/hernani\.dev\/sitemap\.xml/);
+  assert.ok(domain, 'The centralized production domain should be configured.');
+  assert.match(robots, new RegExp(`Sitemap: ${domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/sitemap\\.xml`));
   assert.match(sitemap, /<loc>https:\/\/hernani\.dev\/<\/loc>/);
-  assert.match(html, /https:\/\/hernani\.dev\/og-image\.svg/);
+  assert.match(html, /https:\/\/hernani\.dev\/og-image\.png/);
+  const socialImage = await readOutputBytes('og-image.png');
+  assert.equal(socialImage.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+  assert.equal(socialImage.readUInt32BE(16), 1200);
+  assert.equal(socialImage.readUInt32BE(20), 630);
   await readOutput('favicon.svg');
-  await readOutput('og-image.svg');
 });
