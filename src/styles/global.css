@@ -187,7 +187,7 @@ a:focus-visible {
 .process-list__number {
   font-family: var(--mono);
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   line-height: 1.5;
 }
 
@@ -244,7 +244,7 @@ h2 {
 h1 {
   max-width: 13ch;
   margin-bottom: 1.6rem;
-  font-size: clamp(3.2rem, 5.4vw, 5.25rem);
+  font-size: clamp(3.2rem, 4.5vw, 4rem);
 }
 
 h1 em,
