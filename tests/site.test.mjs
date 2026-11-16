@@ -21,7 +21,8 @@ test('build emits a Portuguese professional homepage with correct SEO metadata',
 test('profile offers professional contact links instead of client-acquisition CTAs', async () => {
   const html = await readOutput('index.html');
 
-  assert.match(html, /mailto:hernani\.junior13@gmail\.com/);
+  assert.match(html, /mailto:contact@hernani\.dev/);
+  assert.doesNotMatch(html, /hernani\.junior13@gmail\.com/);
   assert.match(html, /https:\/\/www\.linkedin\.com\/in\/hernanivieirajr\//);
   assert.match(html, /https:\/\/github\.com\/hernanijr/);
   assert.match(html, /oportunidades em engenharia de software/);
