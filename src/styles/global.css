@@ -10,7 +10,8 @@
   --green: #1f5946;
   --green-dark: #193b30;
   --lime: #d3e2a2;
-  --orange: #bb5133;
+  --orange: #9d3d25;
+  --orange-on-dark: #f0a080;
   --serif: Georgia, "Times New Roman", serif;
   --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -113,9 +114,9 @@ a:focus-visible {
   margin-top: 0.35rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.56rem;
+  font-size: 0.7rem;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
 }
 
 .site-header nav {
@@ -185,8 +186,8 @@ a:focus-visible {
 .project__stack dt,
 .process-list__number {
   font-family: var(--mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
   line-height: 1.5;
 }
 
@@ -243,7 +244,7 @@ h2 {
 h1 {
   max-width: 13ch;
   margin-bottom: 1.6rem;
-  font-size: clamp(3.2rem, 6.4vw, 6.25rem);
+  font-size: clamp(3.2rem, 5.4vw, 5.25rem);
 }
 
 h1 em,
@@ -339,7 +340,7 @@ h2 em {
   display: flex;
   justify-content: space-between;
   color: #dbe3da;
-  font-size: 0.59rem;
+  font-size: 0.7rem;
 }
 
 .solution-map {
@@ -431,7 +432,7 @@ h2 em {
   align-items: center;
   gap: 0.7rem;
   color: var(--muted);
-  font-size: 0.59rem;
+  font-size: 0.7rem;
   text-decoration: none;
 }
 
@@ -559,15 +560,24 @@ h2 em {
   padding: 0.36rem 0.55rem;
   border: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .section-heading--dark > p {
   color: #c3cdc6;
 }
 
+.section-wrap--dark h2 em,
+.section-wrap--dark .eyebrow {
+  color: var(--lime);
+}
+
 .projects-section .section-label {
   color: #c3cdc6;
+}
+
+.projects-section .section-label span:first-child {
+  color: var(--orange-on-dark);
 }
 
 .projects-section .eyebrow {
@@ -652,7 +662,7 @@ h2 em {
 .project__visual-footnote {
   display: block;
   color: #536258;
-  font-size: 0.59rem;
+  font-size: 0.7rem;
 }
 
 .architecture {
@@ -684,7 +694,7 @@ h2 em {
   grid-row: span 2;
   color: var(--orange);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
 }
 
 .architecture__node--cms > span {
@@ -699,7 +709,7 @@ h2 em {
 .architecture__node small {
   margin-top: 0.25rem;
   color: var(--muted);
-  font-size: clamp(0.58rem, 0.9vw, 0.68rem);
+  font-size: clamp(0.7rem, 0.9vw, 0.75rem);
 }
 
 .architecture__node--cms small {
@@ -731,7 +741,7 @@ h2 em {
 
 .project__narrative .eyebrow {
   margin-bottom: 0.5rem;
-  font-size: 0.58rem;
+  font-size: 0.7rem;
 }
 
 .project__narrative p:not(.eyebrow) {
@@ -755,7 +765,7 @@ h2 em {
 
 .project__stack dt {
   color: #c3cdc6;
-  font-size: 0.59rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
 }
 
@@ -922,7 +932,7 @@ h2 em {
   border-top: 1px solid rgb(244 243 237 / 24%);
   color: #c3cdc6;
   font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.7rem;
 }
 
 .site-footer__legal a {
@@ -1034,7 +1044,7 @@ h2 em {
   }
 
   .hero__copy .eyebrow {
-    font-size: 0.56rem;
+    font-size: 0.7rem;
   }
 
   h1 {
@@ -1131,12 +1141,12 @@ h2 em {
   }
 
   .architecture__node strong {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     line-height: 1.2;
   }
 
   .architecture__node small {
-    font-size: 0.55rem;
+    font-size: 0.7rem;
     line-height: 1.2;
   }
 
@@ -1198,7 +1208,7 @@ h2 em {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.6rem;
-    font-size: 0.54rem;
+    font-size: 0.7rem;
   }
 }
 
