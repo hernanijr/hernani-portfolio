@@ -1,0 +1,220 @@
+---
+import ProjectCaseStudy from '../components/ProjectCaseStudy.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { processSteps, projects, services, siteConfig, technologies } from '../data/site';
+
+const title = 'Hernani — Desenvolvimento de sites e software em Belo Horizonte';
+const description =
+  'Engenheiro de software em Belo Horizonte. Desenvolvimento de sites, aplicações web, APIs e integrações com foco em qualidade técnica e problemas reais.';
+const contactUrl = siteConfig.links.contact;
+---
+
+<SiteLayout title={title} description={description}>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <SiteHeader />
+  <main id="main">
+    <section class="hero section-wrap" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> ENGENHARIA DE SOFTWARE · BELO HORIZONTE, BR</p>
+        <h1 id="hero-title">Desenvolvimento de sites e software para <em>resolver problemas reais.</em></h1>
+        <p class="hero__description">
+          Construo sites, aplicações e integrações com foco em qualidade técnica, performance e soluções que fazem sentido para quem vai usar.
+        </p>
+        <div class="hero__actions">
+          {contactUrl && (
+            <a class="button button--primary" href={contactUrl} data-analytics-event="contact_click">
+              Vamos conversar sobre seu projeto <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          <a class="text-link" href="#projects">Conheça meus projetos <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual__heading">
+          <span>DO PROBLEMA À ENTREGA</span>
+          <span aria-hidden="true">01 — 04</span>
+        </div>
+        <div class="solution-map">
+          <div class="solution-map__item solution-map__item--start">
+            <span>01</span><strong>Entender</strong><small>o contexto</small>
+          </div>
+          <span class="solution-map__line" aria-hidden="true"></span>
+          <div class="solution-map__item solution-map__item--middle">
+            <span>02</span><strong>Construir</strong><small>a solução</small>
+          </div>
+          <span class="solution-map__line" aria-hidden="true"></span>
+          <div class="solution-map__item solution-map__item--end">
+            <span>03</span><strong>Evoluir</strong><small>com propósito</small>
+          </div>
+        </div>
+        <p class="hero-visual__note">Tecnologia a serviço<br />do que precisa acontecer.</p>
+        <span class="hero-visual__mark" aria-hidden="true">H.</span>
+      </div>
+      <a class="hero__scroll" href="#about"><span aria-hidden="true">↓</span> UM POUCO SOBRE MIM</a>
+    </section>
+
+    <section class="intro section-wrap section-wrap--ruled" id="about" aria-labelledby="about-title">
+      <div class="section-label"><span>01</span><span>QUEM SOU</span></div>
+      <div class="intro__content">
+        <p class="eyebrow">ENGENHEIRO DE SOFTWARE · BACK-END E FULL-STACK</p>
+        <h2 id="about-title">A tecnologia certa começa com <em>as perguntas certas.</em></h2>
+        <div class="intro__text">
+          <p>
+            Sou Hernani, engenheiro de software em Belo Horizonte. Desenvolvo principalmente com Node.js e TypeScript, e também entrego interfaces e aplicações web completas.
+          </p>
+          <p>
+            Antes de escolher ferramentas, procuro entender o problema. A partir daí, trabalho para criar soluções claras, sustentáveis e fáceis de evoluir — com comunicação direta e responsabilidade técnica em cada etapa.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="services section-wrap" id="services" aria-labelledby="services-title">
+      <div class="section-label"><span>02</span><span>COMO POSSO AJUDAR</span></div>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SOLUÇÕES DIGITAIS</p>
+          <h2 id="services-title">Do primeiro site à próxima versão do seu produto.</h2>
+        </div>
+        <p>Trabalho em diferentes partes de um produto digital, da presença na web aos serviços que conectam seus sistemas.</p>
+      </div>
+      <div class="service-list">
+        {
+          services.map((service) => (
+            <article class="service">
+              <span class="service__number">{service.number}</span>
+              <div class="service__main">
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+              </div>
+              <ul>
+                {service.examples.map((example) => <li>{example}</li>)}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="projects-section section-wrap section-wrap--dark" id="projects" aria-labelledby="projects-title">
+      <div class="section-label"><span>03</span><span>TRABALHO EM DESTAQUE</span></div>
+      <div class="section-heading section-heading--dark">
+        <div>
+          <p class="eyebrow">PROJETOS REAIS, DECISÕES TÉCNICAS</p>
+          <h2 id="projects-title">Engenharia aplicada a necessidades de verdade.</h2>
+        </div>
+        <p>Um recorte de como transformo requisitos em experiências digitais completas, com uma base pensada para continuar evoluindo.</p>
+      </div>
+      {projects.map((project, index) => (
+        <ProjectCaseStudy project={project} index={index + 1} total={projects.length} />
+      ))}
+    </section>
+
+    <section class="technology section-wrap" id="technology" aria-labelledby="technology-title">
+      <div class="section-label"><span>04</span><span>FERRAMENTAS COM PROPÓSITO</span></div>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">TECNOLOGIA A SERVIÇO DO PRODUTO</p>
+          <h2 id="technology-title">Escolhas técnicas alinhadas ao que o projeto precisa.</h2>
+        </div>
+        <p>O repertório cobre da interface à infraestrutura. A ferramenta vem depois de entender o contexto.</p>
+      </div>
+      <div class="technology-list">
+        {
+          technologies.map((group) => (
+            <article class="technology-group">
+              <div>
+                <h3>{group.name}</h3>
+                <p>{group.description}</p>
+              </div>
+              <ul aria-label={`Tecnologias para ${group.name}`}>
+                {group.tools.map((tool) => <li>{tool}</li>)}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="process section-wrap section-wrap--tint" id="process" aria-labelledby="process-title">
+      <div class="section-label"><span>05</span><span>ETAPAS DO TRABALHO</span></div>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">COMO EU TRABALHO</p>
+          <h2 id="process-title">Clareza antes, durante e depois do desenvolvimento.</h2>
+        </div>
+        <p>Um processo direto, com decisões compartilhadas e espaço para validar o que está sendo construído.</p>
+      </div>
+      <ol class="process-list">
+        {
+          processSteps.map((step) => (
+            <li>
+              <span class="process-list__number">{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="contact section-wrap" id="contact" aria-labelledby="contact-title">
+      <div class="section-label">
+        <span>06</span>
+        <span>{contactUrl ? 'PRÓXIMA CONVERSA' : 'PERFIL PROFISSIONAL'}</span>
+      </div>
+      <div class="contact__content">
+        {contactUrl ? (
+          <>
+            <p class="eyebrow">TEM UM PROBLEMA PARA RESOLVER?</p>
+            <h2 id="contact-title">Vamos entender o que <em>seu projeto precisa.</em></h2>
+            <p>Compartilhe um pouco da ideia ou do desafio.</p>
+            <a
+              class="button button--primary"
+              href={contactUrl}
+              data-analytics-event="contact_click"
+            >Vamos conversar <span aria-hidden="true">↗</span></a>
+          </>
+        ) : (
+          <>
+            <p class="eyebrow">PERFIL PROFISSIONAL</p>
+            <h2 id="contact-title">Conheça meu trabalho e <em>acompanhe meus projetos.</em></h2>
+            <p>Veja projetos e acompanhe meu trabalho em desenvolvimento de software.</p>
+            <a
+              class="button button--primary"
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+              data-analytics-event="github_click"
+            >Visitar meu GitHub <span aria-hidden="true">↗</span></a>
+          </>
+        )}
+      </div>
+      <div class="contact__aside">
+        <span class="contact__asterisk" aria-hidden="true">✳</span>
+        <p>Atuação em<br /><strong>Belo Horizonte, MG</strong><br />e projetos digitais.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="site-footer__main">
+      <a class="wordmark wordmark--footer" href="#top">
+        <span class="wordmark__symbol" aria-hidden="true">h.</span>
+        <span>{siteConfig.name}<small>ENGENHARIA DE SOFTWARE</small></span>
+      </a>
+      <p>Sites e software para resolver problemas reais.<br />Belo Horizonte, Minas Gerais, Brasil.</p>
+      <a
+        class="site-footer__github"
+        href={siteConfig.links.github}
+        target="_blank"
+        rel="noreferrer"
+        data-analytics-event="github_click"
+      >GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="site-footer__legal">
+      <span>© {new Date().getFullYear()} Hernani. Todos os direitos reservados.</span>
+      <a href="#top">Voltar ao início ↑</a>
+    </div>
+  </footer>
+</SiteLayout>

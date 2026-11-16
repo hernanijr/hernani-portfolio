@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "hernani-portfolio",
+  "compatibility_date": "2026-11-16",
+  "assets": {
+    "directory": "./dist"
+  },
+  "preview_urls": true
+}
