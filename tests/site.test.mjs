@@ -53,16 +53,38 @@ test('structured data identifies a person without inventing an organization', as
 test('internal links target existing sections and no links are empty', async () => {
   const html = await readOutput('index.html');
   const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
-  const anchors = [...html.matchAll(/<a\b([^>]*)>/g)].map((match) => match[1]);
+  const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
 
   assert.ok(anchors.length > 0);
-  for (const attributes of anchors) {
+  for (const [, attributes, content] of anchors) {
     const href = attributes.match(/\bhref="([^"]*)"/)?.[1];
     assert.ok(href, `Anchor is missing href: ${attributes}`);
     assert.notEqual(href.trim(), '', 'Anchor href must not be empty.');
     if (href.startsWith('#')) {
       assert.ok(ids.has(href.slice(1)), `Internal link target ${href} does not exist.`);
     }
+    assert.ok(
+      content.replace(/<[^>]*>/g, '').trim() || /\baria-label=/.test(attributes),
+      `Anchor has no accessible name: ${attributes}`,
+    );
+  }
+});
+
+test('document uses semantic landmarks and accessible section headings', async () => {
+  const html = await readOutput('index.html');
+  const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
+  const labelledSections = [...html.matchAll(/<section\b[^>]*\baria-labelledby="([^"]+)"/g)];
+
+  assert.match(html, /<header\b/);
+  assert.match(html, /<nav aria-label="Navegação principal"/);
+  assert.match(html, /<main id="main"/);
+  assert.match(html, /<footer\b/);
+  assert.ok(labelledSections.length > 0);
+  for (const [, headingId] of labelledSections) {
+    assert.ok(ids.has(headingId), `Section heading target #${headingId} does not exist.`);
+  }
+  for (const [, attributes] of html.matchAll(/<img\b([^>]*)>/g)) {
+    assert.match(attributes, /\balt="/, 'Images must have alternative text.');
   }
 });
 
