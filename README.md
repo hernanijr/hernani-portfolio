@@ -1,6 +1,6 @@
 # Hernani — Software Engineering Portfolio
 
-A professional portfolio for Hernani, a software engineer in Belo Horizonte, Brazil. The site presents web development, custom software, back-end, and integration capabilities, with a detailed case study of the Talk BH website.
+A professional profile and selected-work portfolio for Hernani Junior, a software engineer in Belo Horizonte, Brazil. The site focuses on backend engineering, APIs, system integration, reliability, and technical projects, with a detailed case study of the Talk BH website.
 
 All published page content is written in Brazilian Portuguese. Code, identifiers, comments, and technical documentation are written in English.
 
@@ -23,7 +23,7 @@ The site does not require a database, application server, analytics service, or 
 - `src/pages/sitemap.xml.ts` generates the production sitemap; `public/robots.txt` points crawlers to it.
 - `wrangler.jsonc` configures the `dist` directory as Cloudflare static assets.
 
-The architecture uses explicit route files and content modules so English localization can be added later without introducing a translation framework in this release.
+The architecture uses explicit route files and content modules. The public site is currently written in Brazilian Portuguese; an English version can be added as a separate localization task.
 
 ## Requirements
 
@@ -77,11 +77,11 @@ For pull requests, review the Cloudflare preview before merging. Merging reviewe
 
 ### Add a project
 
-Add a project entry to the `projects` array in `src/data/site.ts`. Provide its factual description, engineering decisions, technology details, public links, and attribution. The page renders each entry with `ProjectCaseStudy.astro`; do not add results, client claims, or ownership details that have not been confirmed.
+Add a selected case study to the `projects` array in `src/data/site.ts`. Provide its factual description, engineering decisions, technology details, public links, and attribution. The page renders each entry with `ProjectCaseStudy.astro`. Add smaller prototypes and technical experiments to the `experiments` array and label their maturity accurately. Do not add results, client claims, or ownership details that have not been confirmed.
 
 ### Configure contact links
 
-Edit `siteConfig.links` in `src/data/site.ts`. Set `contact` only to a confirmed professional contact destination; when it is empty, the primary contact action is omitted and GitHub is shown as a profile link. GitHub remains available in the footer.
+Edit `siteConfig.links` in `src/data/site.ts`. The contact section uses the professional email address and links to LinkedIn and GitHub. Update these values in `siteConfig.links` when the public destinations change.
 
 ### Update the production domain
 
@@ -91,7 +91,7 @@ The production URL appears in `astro.config.mjs` and `src/data/site.ts`. Update 
 
 No analytics service is installed and the site does not collect visitor data. Key links expose stable `data-analytics-event` identifiers for a future, consent-appropriate integration:
 
-- `contact_click` — project inquiry links.
+- `contact_click` — professional email links.
 - `project_click` — Talk BH website and repository links.
 - `github_click` — footer GitHub profile link.
 
