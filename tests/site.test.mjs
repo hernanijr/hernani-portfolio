@@ -64,7 +64,7 @@ test('internal links target existing sections and no links are empty', async () 
       assert.ok(ids.has(href.slice(1)), `Internal link target ${href} does not exist.`);
     }
     assert.ok(
-      content.replace(/<[^>]*>/g, '').trim() || /\baria-label=/.test(attributes),
+      /[^<\s][^<]*/.test(content) || /\baria-label=/.test(attributes),
       `Anchor has no accessible name: ${attributes}`,
     );
   }
