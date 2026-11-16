@@ -1,0 +1,125 @@
+name: Web quality audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install matching Chrome and ChromeDriver
+        run: |
+          npm install --global browser-driver-manager@2.0.1
+          browser-driver-manager install chrome
+          source "$HOME/.browser-driver-manager/.env"
+          echo "CHROME_TEST_PATH=$CHROME_TEST_PATH" >> "$GITHUB_ENV"
+          echo "CHROMEDRIVER_TEST_PATH=$CHROMEDRIVER_TEST_PATH" >> "$GITHUB_ENV"
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Start local preview
+        run: |
+          mkdir -p artifacts
+          npm run preview -- --host 127.0.0.1 --port 4321 > artifacts/astro-preview.log 2>&1 &
+          echo $! > /tmp/astro-preview.pid
+
+      - name: Wait for local preview
+        id: preview_ready
+        run: |
+          node --input-type=module <<'NODE'
+          const url = 'http://127.0.0.1:4321';
+          const deadline = Date.now() + 30000;
+          while (Date.now() < deadline) {
+            try {
+              const response = await fetch(url);
+              if (response.ok) process.exit(0);
+            } catch {}
+            await new Promise((resolve) => setTimeout(resolve, 500));
+          }
+          throw new Error('Astro preview did not become ready within 30 seconds.');
+          NODE
+
+      - name: Run axe-core accessibility audit
+        run: npx --yes @axe-core/cli@4.14.0 http://127.0.0.1:4321 --exit --timer --verbose --chrome-path="$CHROME_TEST_PATH" --chromedriver-path="$CHROMEDRIVER_TEST_PATH" --chrome-options="no-sandbox,disable-dev-shm-usage"
+
+      - name: Run Lighthouse mobile audit
+        if: always() && steps.preview_ready.outcome == 'success'
+        run: |
+          mkdir -p artifacts
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="$CHROME_TEST_PATH" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=html --output-path=artifacts/lighthouse-mobile.html --quiet
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="$CHROME_TEST_PATH" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=artifacts/lighthouse-mobile.json --quiet
+
+      - name: Run Lighthouse desktop audit
+        if: always() && steps.preview_ready.outcome == 'success'
+        run: |
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="$CHROME_TEST_PATH" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --preset=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=html --output-path=artifacts/lighthouse-desktop.html --quiet
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="$CHROME_TEST_PATH" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --preset=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=artifacts/lighthouse-desktop.json --quiet
+
+      - name: Summarize Lighthouse category scores
+        if: always() && steps.preview_ready.outcome == 'success'
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+
+          for (const viewport of ['mobile', 'desktop']) {
+            const report = JSON.parse(
+              await readFile(`artifacts/lighthouse-${viewport}.json`, 'utf8'),
+            );
+            const score = (category) =>
+              Math.round((report.categories[category]?.score ?? 0) * 100);
+            const metric = (audit) => report.audits[audit]?.numericValue ?? null;
+            const summary = {
+              performance: score('performance'),
+              accessibility: score('accessibility'),
+              bestPractices: score('best-practices'),
+              seo: score('seo'),
+              FCP_ms: metric('first-contentful-paint'),
+              LCP_ms: metric('largest-contentful-paint'),
+              TBT_ms: metric('total-blocking-time'),
+              CLS: metric('cumulative-layout-shift'),
+              speedIndex_ms: metric('speed-index'),
+            };
+            console.log(`LIGHTHOUSE_${viewport.toUpperCase()} ${JSON.stringify(summary)}`);
+          }
+          NODE
+
+      - name: Upload audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-quality-reports
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14

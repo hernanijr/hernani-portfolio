@@ -5,87 +5,72 @@ import test from 'node:test';
 const readOutput = (path = '') => readFile(new URL(`../dist/${path}`, import.meta.url), 'utf8');
 const readOutputBytes = (path = '') => readFile(new URL(`../dist/${path}`, import.meta.url));
 
-test('build emits a Portuguese homepage with unique SEO metadata and canonical URL', async () => {
+test('build emits a Portuguese professional homepage with correct SEO metadata', async () => {
   const html = await readOutput('index.html');
 
   assert.match(html, /<html lang="pt-BR">/);
-  assert.match(html, /<title>Hernani — Desenvolvimento de sites e software em Belo Horizonte<\/title>/);
+  assert.match(html, /<title>Hernani Junior — Engenheiro de Software \| Backend, APIs e Integrações<\/title>/);
   assert.match(html, /<meta name="description" content="[^"]{50,}"/);
-  assert.match(html, /<link rel="canonical" href="https:\/\/hernani\.dev\/"/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/hernani\.dev\/">/);
   assert.match(html, /<meta property="og:title"/);
   assert.match(html, /<meta property="og:image" content="https:\/\/hernani\.dev\/og-image\.png"/);
-  assert.match(html, /<meta property="og:image:type" content="image\/png"/);
-  assert.match(html, /<meta property="og:image:width" content="1200"/);
-  assert.match(html, /<meta property="og:image:height" content="630"/);
-  assert.match(html, /<meta property="og:image:alt" content="Hernani — engenharia de software em Belo Horizonte\. Sites e software para problemas reais\."/);
   assert.match(html, /<meta name="twitter:card" content="summary_large_image"/);
-  assert.match(html, /<meta name="twitter:image" content="https:\/\/hernani\.dev\/og-image\.png"/);
-  assert.match(html, /<meta name="twitter:image:alt" content="Hernani — engenharia de software em Belo Horizonte\. Sites e software para problemas reais\."/);
   assert.equal((html.match(/<h1(?:\s|>)/g) ?? []).length, 1);
 });
 
-test('contact action is omitted when unconfigured and GitHub is clearly a profile link', async () => {
+test('profile offers professional contact links instead of client-acquisition CTAs', async () => {
   const html = await readOutput('index.html');
-  const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
 
-  assert.doesNotMatch(html, /data-analytics-event="contact_click"/);
-  assert.ok(
-    anchors.some(([, attributes, content]) =>
-      attributes.includes('href="https://github.com/hernanijr"') &&
-      content.includes('Visitar meu GitHub')
-    ),
-  );
-  assert.ok(
-    anchors.some(([, attributes, content]) =>
-      attributes.includes('href="https://github.com/hernanijr"') &&
-      content.includes('GitHub')
-    ),
-  );
+  assert.match(html, /mailto:contact@hernani\.dev/);
+  assert.doesNotMatch(html, /hernani\.junior13@gmail\.com/);
+  assert.match(html, /https:\/\/www\.linkedin\.com\/in\/hernanivieirajr\//);
+  assert.match(html, /https:\/\/github\.com\/hernanijr/);
+  assert.match(html, /oportunidades em engenharia de software/);
+  assert.doesNotMatch(html, /Vamos conversar sobre seu projeto|Como posso ajudar|TEM UM PROBLEMA PARA RESOLVER/);
 });
 
-test('project case study displays its position and count', async () => {
+test('selected work and experiments are clearly distinguished', async () => {
   const html = await readOutput('index.html');
   const indexLabels = [...html.matchAll(/<span class="project__index"[^>]*>([\s\S]*?)<\/span>/g)]
     .map(([, content]) => content.replace(/\s+/g, ' ').trim());
 
   assert.deepEqual(indexLabels, ['01 / 01']);
+  assert.match(html, /Talk BH/);
+  assert.match(html, /Bom Dia Pra Quem/);
+  assert.match(html, /Cortex/);
+  assert.match(html, /Homebroker/);
+  assert.match(html, /Protótipo/);
+  assert.match(html, /experimentos técnicos, não produtos apresentados como soluções prontas para produção/);
+  assert.match(html, /A comunidade e seus organizadores definem os encontros/);
 });
 
-test('build includes the professional profile, required sections and real Talk BH attribution', async () => {
+test('homepage includes all intended sections and excludes employer-specific content', async () => {
   const html = await readOutput('index.html');
 
-  for (const content of [
-    'Belo Horizonte',
-    'Software Engineer',
-    'Talk BH',
-    'Desenvolvimento de sites e software',
-    'Decap Turbo CMS',
-    'github.com/hernanijr/talkbh',
-    'A comunidade e seus organizadores definem os encontros',
-    'github.com/hernanijr',
-  ]) {
-    assert.ok(html.includes(content), `Expected generated homepage to include "${content}".`);
-  }
-
-  for (const id of ['about', 'services', 'projects', 'technology', 'process', 'contact']) {
+  for (const id of ['about', 'expertise', 'projects', 'experiments', 'technology', 'contact']) {
     assert.match(html, new RegExp(`id="${id}"`), `Missing page section #${id}.`);
   }
+  assert.doesNotMatch(html, /Grupo Boticário|FCamara/);
   assert.doesNotMatch(html, /Lorem ipsum|Your Name|Coming soon|TODO/);
 });
 
-test('structured data identifies a person without inventing an organization', async () => {
+test('structured data identifies the professional profile and public destinations', async () => {
   const html = await readOutput('index.html');
   const jsonLd = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
 
   assert.ok(jsonLd, 'Expected JSON-LD structured data.');
   const person = JSON.parse(jsonLd[1]);
   assert.equal(person['@type'], 'Person');
-  assert.equal(person.name, 'Hernani');
+  assert.equal(person.name, 'Hernani Junior');
+  assert.equal(person.jobTitle, 'Software Engineer');
   assert.equal(person.address.addressLocality, 'Belo Horizonte');
-  assert.deepEqual(person.sameAs, ['https://github.com/hernanijr']);
+  assert.deepEqual(person.sameAs, [
+    'https://github.com/hernanijr',
+    'https://www.linkedin.com/in/hernanivieirajr/',
+  ]);
 });
 
-test('internal links target existing sections and no links are empty', async () => {
+test('internal links target existing sections and all links have accessible names', async () => {
   const html = await readOutput('index.html');
   const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
   const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
