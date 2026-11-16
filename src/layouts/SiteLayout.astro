@@ -10,7 +10,7 @@ interface Props {
 const { title, description } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, siteConfig.domain).href;
 const socialImage = `${siteConfig.domain}/og-image.png`;
-const socialImageAlt = 'Hernani — engenharia de software em Belo Horizonte. Sites e software para problemas reais.';
+const socialImageAlt = 'Hernani Junior — engenheiro de software com foco em backend, APIs e integração de sistemas.';
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -24,15 +24,18 @@ const personSchema = {
     addressRegion: 'Minas Gerais',
     addressCountry: 'BR',
   },
-  sameAs: [siteConfig.links.github],
+  sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
   knowsAbout: [
     'Software engineering',
+    'Backend development',
     'Node.js',
     'TypeScript',
-    'Web application development',
-    'REST APIs',
-    'PostgreSQL',
-    'Cloud infrastructure',
+    'NestJS',
+    'REST API design',
+    'System integration',
+    'Distributed systems',
+    'Asynchronous processing',
+    'Software observability',
   ],
 };
 ---
@@ -48,7 +51,7 @@ const personSchema = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:site_name" content="Hernani" />
+    <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
