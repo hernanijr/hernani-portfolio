@@ -4,21 +4,16 @@ import { siteConfig } from '../data/site';
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="wordmark" href="#top" aria-label="Hernani — início">
+    <a class="wordmark" href="#top" aria-label="Hernani Junior — início">
       <span class="wordmark__symbol" aria-hidden="true">h.</span>
       <span>{siteConfig.name}<small>ENGENHARIA DE SOFTWARE</small></span>
     </a>
     <nav aria-label="Navegação principal">
       <a href="#about">Sobre</a>
-      <a href="#services">Soluções</a>
+      <a href="#expertise">Atuação</a>
       <a href="#projects">Projetos</a>
-      {siteConfig.links.contact && (
-        <a
-          class="site-header__contact"
-          href={siteConfig.links.contact}
-          data-analytics-event="contact_click"
-        >Vamos conversar <span aria-hidden="true">↗</span></a>
-      )}
+      <a href="#technology">Stack</a>
+      <a class="site-header__contact" href="#contact">Contato <span aria-hidden="true">↗</span></a>
     </nav>
   </div>
 </header>
