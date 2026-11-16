@@ -38,6 +38,7 @@ jobs:
           echo $! > /tmp/astro-preview.pid
 
       - name: Wait for local preview
+        id: preview_ready
         run: |
           node --input-type=module <<'NODE'
           const url = 'http://127.0.0.1:4321';
@@ -56,6 +57,7 @@ jobs:
         run: npx --yes @axe-core/cli@4.14.0 http://127.0.0.1:4321 --exit --timer --verbose --chrome-path="$CHROME_TEST_PATH" --chromedriver-path="$CHROMEDRIVER_TEST_PATH" --chrome-options="no-sandbox,disable-dev-shm-usage"
 
       - name: Run Lighthouse mobile audit
+        if: always() && steps.preview_ready.outcome == 'success'
         run: |
           mkdir -p artifacts
           npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
@@ -70,6 +72,7 @@ jobs:
             --output=json --output-path=artifacts/lighthouse-mobile.json --quiet
 
       - name: Run Lighthouse desktop audit
+        if: always() && steps.preview_ready.outcome == 'success'
         run: |
           npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
             --chrome-path="$CHROME_TEST_PATH" \
@@ -89,8 +92,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: portfolio-quality-reports
-          path: |
-            artifacts/
-            artifacts/astro-preview.log
+          path: artifacts/
           if-no-files-found: warn
           retention-days: 14
