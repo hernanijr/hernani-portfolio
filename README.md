@@ -15,7 +15,7 @@ The site does not require a database, application server, analytics service, or 
 
 ## Architecture
 
-- `src/data/site.ts` centralizes profile details, links, services, technologies, process steps, and project content.
+- `src/data/site.ts` centralizes profile details, contact links, technical focus areas, technologies, selected case studies, and experiments.
 - `src/pages/index.astro` composes the single public page from reusable Astro components.
 - `src/components/ProjectCaseStudy.astro` renders project data so future case studies can be added without rebuilding the page structure.
 - `src/layouts/SiteLayout.astro` provides document metadata, canonical URLs, Open Graph and Twitter metadata, and Person structured data.
