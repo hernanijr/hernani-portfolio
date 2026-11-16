@@ -1,0 +1,65 @@
+---
+import { siteConfig } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.domain).href;
+const socialImage = `${siteConfig.domain}/og-image.svg`;
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteConfig.domain}/#hernani`,
+  name: siteConfig.name,
+  jobTitle: 'Software Engineer',
+  url: siteConfig.domain,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Belo Horizonte',
+    addressRegion: 'Minas Gerais',
+    addressCountry: 'BR',
+  },
+  sameAs: [siteConfig.links.github],
+  knowsAbout: [
+    'Software engineering',
+    'Node.js',
+    'TypeScript',
+    'Web application development',
+    'REST APIs',
+    'PostgreSQL',
+    'Cloud infrastructure',
+  ],
+};
+---
+
+<!doctype html>
+<html lang={siteConfig.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f3ed" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Hernani" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <title>{title}</title>
+  </head>
+  <body id="top">
+    <slot />
+  </body>
+</html>
