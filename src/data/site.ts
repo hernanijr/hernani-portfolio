@@ -5,8 +5,8 @@ export const siteConfig = {
   location: 'Belo Horizonte, Minas Gerais, Brasil',
   locale: 'pt-BR',
   links: {
-    contact: 'mailto:hernani.junior13@gmail.com?subject=Contato%20profissional',
-    email: 'mailto:hernani.junior13@gmail.com',
+    contact: 'mailto:contact@hernani.dev?subject=Contato%20profissional',
+    email: 'mailto:contact@hernani.dev',
     linkedin: 'https://www.linkedin.com/in/hernanivieirajr/',
     github: 'https://github.com/hernanijr',
   },
@@ -14,21 +14,18 @@ export const siteConfig = {
 
 export const expertiseAreas = [
   {
-    number: '01',
     title: 'Backend e APIs',
     description:
       'Desenvolvimento e evolução de serviços, APIs e regras de negócio com atenção a contratos claros, manutenção e qualidade de código.',
     examples: ['Node.js', 'TypeScript', 'NestJS', 'Express', 'APIs REST'],
   },
   {
-    number: '02',
     title: 'Integrações e sistemas distribuídos',
     description:
       'Conexão entre aplicações e plataformas, processamento assíncrono e fluxos resilientes para manter os sistemas consistentes.',
     examples: ['Integração entre sistemas', 'Filas e jobs', 'Idempotência', 'Retries e DLQ'],
   },
   {
-    number: '03',
     title: 'Dados, confiabilidade e operação',
     description:
       'Modelagem e persistência de dados, observabilidade e práticas que ajudam a diagnosticar problemas e evoluir aplicações em produção.',
