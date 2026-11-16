@@ -99,6 +99,7 @@ export const experiments = [
       'Experimento com geração de conteúdo assistida por LLM e integração de APIs externas, combinando coleta de dados e processamento com modelos de linguagem.',
     stack: ['Next.js', 'OpenAI API', 'Supabase', 'X API'],
     repository: 'https://github.com/hernanijr/bomdiapraquem',
+    backendRepository: null,
   },
   {
     name: 'Cortex',
@@ -116,5 +117,6 @@ export const experiments = [
       'Experimento em Go e Kafka para explorar livro de ofertas em memória, matching de ordens, processamento concorrente e execução parcial.',
     stack: ['Go', 'Kafka', 'Concorrência', 'Order book'],
     repository: 'https://github.com/hernanijr/homebroker',
+    backendRepository: null,
   },
 ] as const;
