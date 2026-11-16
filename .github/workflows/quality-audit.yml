@@ -1,0 +1,93 @@
+name: Web quality audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - uses: browser-actions/setup-chrome@v2
+        id: setup-chrome
+        with:
+          chrome-version: stable
+          install-chromedriver: true
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Start local preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/astro-preview.log 2>&1 &
+          echo $! > /tmp/astro-preview.pid
+
+      - name: Wait for local preview
+        run: |
+          node --input-type=module <<'NODE'
+          const url = 'http://127.0.0.1:4321';
+          const deadline = Date.now() + 30000;
+          while (Date.now() < deadline) {
+            try {
+              const response = await fetch(url);
+              if (response.ok) process.exit(0);
+            } catch {}
+            await new Promise((resolve) => setTimeout(resolve, 500));
+          }
+          throw new Error('Astro preview did not become ready within 30 seconds.');
+          NODE
+
+      - name: Run axe-core accessibility audit
+        run: npx --yes @axe-core/cli@4.14.0 http://127.0.0.1:4321 --exit --timer --verbose
+
+      - name: Run Lighthouse mobile audit
+        run: |
+          mkdir -p artifacts
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=html --output-path=artifacts/lighthouse-mobile.html --quiet
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=artifacts/lighthouse-mobile.json --quiet
+
+      - name: Run Lighthouse desktop audit
+        run: |
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --preset=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=html --output-path=artifacts/lighthouse-desktop.html --quiet
+          npx --yes lighthouse@13.6.0 http://127.0.0.1:4321 \
+            --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --preset=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=artifacts/lighthouse-desktop.json --quiet
+
+      - name: Upload audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-quality-reports
+          path: |
+            artifacts/
+            /tmp/astro-preview.log
+          if-no-files-found: warn
+          retention-days: 14
