@@ -1,84 +1,66 @@
 export const siteConfig = {
-  name: 'Hernani',
-  title: 'Engenharia de software e soluções digitais',
+  name: 'Hernani Junior',
+  title: 'Engenheiro de Software | Backend, APIs e Integrações',
   domain: 'https://hernani.dev',
   location: 'Belo Horizonte, Minas Gerais, Brasil',
   locale: 'pt-BR',
   links: {
-    contact: '' as string,
+    contact: 'mailto:hernani.junior13@gmail.com?subject=Contato%20profissional',
+    email: 'mailto:hernani.junior13@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/hernanivieirajr/',
     github: 'https://github.com/hernanijr',
   },
 } as const;
 
-export const services = [
+export const expertiseAreas = [
   {
     number: '01',
-    title: 'Sites e presença digital',
+    title: 'Backend e APIs',
     description:
-      'Sites institucionais, páginas de campanha e experiências para comunidades e eventos, com conteúdo claro, acessibilidade e uma base técnica preparada para evoluir.',
-    examples: ['Sites institucionais', 'Páginas multilíngues', 'SEO técnico e performance'],
+      'Desenvolvimento e evolução de serviços, APIs e regras de negócio com atenção a contratos claros, manutenção e qualidade de código.',
+    examples: ['Node.js', 'TypeScript', 'NestJS', 'Express', 'APIs REST'],
   },
   {
     number: '02',
-    title: 'Software sob medida',
+    title: 'Integrações e sistemas distribuídos',
     description:
-      'Aplicações web, painéis administrativos e ferramentas internas que se encaixam nos processos reais do seu negócio — em vez de adaptar o trabalho a uma solução genérica.',
-    examples: ['Aplicações web', 'Painéis administrativos', 'Automação de fluxos'],
+      'Conexão entre aplicações e plataformas, processamento assíncrono e fluxos resilientes para manter os sistemas consistentes.',
+    examples: ['Integração entre sistemas', 'Filas e jobs', 'Idempotência', 'Retries e DLQ'],
   },
   {
     number: '03',
-    title: 'Back-end e integrações',
+    title: 'Dados, confiabilidade e operação',
     description:
-      'APIs, modelagem de dados e integrações para conectar sistemas, organizar informações e sustentar experiências digitais confiáveis.',
-    examples: ['APIs REST', 'Integrações entre sistemas', 'Arquitetura e bancos de dados'],
-  },
-  {
-    number: '04',
-    title: 'Manutenção e evolução',
-    description:
-      'Melhorias para aplicações existentes, correções, otimizações de desempenho e acompanhamento técnico para que o produto continue atendendo às necessidades.',
-    examples: ['Evolução de aplicações', 'Correções e melhorias técnicas', 'Otimização e manutenção'],
+      'Modelagem e persistência de dados, observabilidade e práticas que ajudam a diagnosticar problemas e evoluir aplicações em produção.',
+    examples: ['SQL e NoSQL', 'Observabilidade', 'Testes automatizados', 'CI/CD'],
   },
 ] as const;
 
 export const technologies = [
   {
-    name: 'Aplicações e interfaces',
-    description: 'Produtos web acessíveis, responsivos e fáceis de usar.',
-    tools: ['React', 'Next.js', 'Astro', 'TypeScript', 'Tailwind CSS'],
+    name: 'Backend e APIs',
+    description: 'Serviços, contratos e regras de negócio.',
+    tools: ['Node.js', 'TypeScript', 'NestJS', 'Express', 'REST APIs'],
   },
   {
-    name: 'Back-end e dados',
-    description: 'Serviços, APIs e estruturas de dados para regras de negócio.',
-    tools: ['Node.js', 'NestJS', 'APIs REST', 'PostgreSQL', 'MySQL'],
+    name: 'Dados e processamento',
+    description: 'Persistência, mensageria e execução assíncrona.',
+    tools: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ', 'Kafka'],
   },
   {
-    name: 'Entrega e infraestrutura',
-    description: 'Automação de publicação e infraestrutura adequada a cada projeto.',
-    tools: ['AWS', 'Docker', 'Cloudflare', 'GitHub Actions', 'CI/CD'],
-  },
-] as const;
-
-export const processSteps = [
-  {
-    number: '01',
-    title: 'Entender o problema',
-    description: 'Alinhamos objetivos, pessoas envolvidas e o que precisa melhorar antes de definir a solução.',
+    name: 'Cloud e entrega',
+    description: 'Infraestrutura, automação e publicação.',
+    tools: ['AWS', 'Docker', 'ArgoCD', 'Helm', 'GitHub Actions', 'Cloudflare Workers'],
   },
   {
-    number: '02',
-    title: 'Definir escopo e solução',
-    description: 'Escolhemos uma abordagem técnica proporcional ao contexto, com prioridades e entregas claras.',
+    name: 'Qualidade e observabilidade',
+    description: 'Práticas para validar comportamento e operar sistemas.',
+    tools: ['Jest', 'OpenTelemetry', 'Grafana', 'Prometheus', 'Sentry', 'Kibana'],
   },
   {
-    number: '03',
-    title: 'Desenvolver e validar',
-    description: 'Construímos em etapas, revisamos os detalhes e validamos o resultado com quem vai usar.',
-  },
-  {
-    number: '04',
-    title: 'Publicar e evoluir',
-    description: 'Preparamos a publicação e podemos seguir com melhorias e manutenção conforme a necessidade.',
+    name: 'Frontend complementar',
+    description: 'Experiência construindo interfaces e aplicações web completas.',
+    tools: ['React', 'Next.js', 'Astro', 'Tailwind CSS'],
   },
 ] as const;
 
@@ -94,7 +76,7 @@ export const projects = [
       'Estruturei uma experiência bilíngue e responsiva com um fluxo editorial independente, para que os organizadores gerenciem conteúdo enquanto o site permanece rápido e estático.',
     details: [
       { label: 'Interface', value: 'Astro, TypeScript e Tailwind CSS' },
-      { label: 'Conteúdo', value: 'Decap Turbo CMS com fluxo editorial' },
+      { label: 'Conteúdo', value: 'Decap CMS com fluxo editorial' },
       { label: 'Infraestrutura', value: 'Cloudflare Workers e Static Assets' },
       { label: 'Entrega', value: 'GitHub Actions e CI/CD' },
     ],
@@ -106,5 +88,33 @@ export const projects = [
       'A comunidade e seus organizadores definem os encontros e fornecem as informações e fotografias. Minha contribuição é o desenvolvimento e a manutenção técnica do site e de sua infraestrutura.',
     website: 'https://talk.bh/',
     repository: 'https://github.com/hernanijr/talkbh',
+  },
+] as const;
+
+export const experiments = [
+  {
+    name: 'Bom Dia Pra Quem',
+    status: 'Protótipo',
+    summary:
+      'Experimento com geração de conteúdo assistida por LLM e integração de APIs externas, combinando coleta de dados e processamento com modelos de linguagem.',
+    stack: ['Next.js', 'OpenAI API', 'Supabase', 'X API'],
+    repository: 'https://github.com/hernanijr/bomdiapraquem',
+  },
+  {
+    name: 'Cortex',
+    status: 'Protótipo full-stack',
+    summary:
+      'Aplicação de produtividade explorando organização de tarefas, projetos, áreas e notas, com frontend React e API própria.',
+    stack: ['Next.js', 'React', 'NestJS', 'Prisma', 'PostgreSQL'],
+    repository: 'https://github.com/hernanijr/cortex-frontend',
+    backendRepository: 'https://github.com/hernanijr/cortex-backend',
+  },
+  {
+    name: 'Homebroker',
+    status: 'Experimento de sistemas',
+    summary:
+      'Experimento em Go e Kafka para explorar livro de ofertas em memória, matching de ordens, processamento concorrente e execução parcial.',
+    stack: ['Go', 'Kafka', 'Concorrência', 'Order book'],
+    repository: 'https://github.com/hernanijr/homebroker',
   },
 ] as const;
