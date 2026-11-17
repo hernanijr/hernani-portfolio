@@ -4,7 +4,7 @@ The Writing section is a small, file-based publishing workflow. Articles are aut
 
 ## Add an article
 
-1. Create a Markdown file in `src/content/writing/`.
+1. Copy `src/content/writing/ARTICLE-TEMPLATE.md` to a new Markdown file in `src/content/writing/`.
 2. Use a lowercase, hyphen-separated filename. The filename becomes the URL slug.
 3. Add the required frontmatter.
 4. Write the article in Markdown.
