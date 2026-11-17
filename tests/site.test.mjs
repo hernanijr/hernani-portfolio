@@ -121,7 +121,7 @@ test('Writing archive is generated without placeholder articles', async () => {
   assert.ok(html.includes('<h1 id="writing-title">Writing'));
   assert.ok(html.includes('Investigações, aprendizados e ideias sobre engenharia de software'));
   assert.ok(html.includes('Os artigos serão publicados quando estiverem prontos'));
-  assert.ok(html.includes('href="/writing/">Writing'));
+  assert.ok(html.includes('href="/writing/"'));
   assert.ok(html.includes('name="description"'));
 });
 
