@@ -1716,6 +1716,11 @@ h2 em {
     padding-bottom: 0.2rem;
   }
 
+  .site-header nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   .experience-item,
   .experience-previous {
     grid-template-columns: 1fr;
