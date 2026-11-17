@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const posts = (await getCollection('writing', ({ data }) => data.draft !== true))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const title = 'Writing | Hernani Junior — Engenharia de Software';
+const description =
+  'Artigos, investigações e aprendizados sobre engenharia de software, backend, APIs e integração de sistemas.';
+---
+
+<SiteLayout title={title} description={description}>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <SiteHeader />
+  <main id="main">
+    <section class="writing-page section-wrap" aria-labelledby="writing-title">
+      <div class="section-label"><span>01</span><span>ARTIGOS E ANOTAÇÕES</span></div>
+      <div class="writing-page__content">
+        <p class="eyebrow">ESCRITA TÉCNICA</p>
+        <h1 id="writing-title">Writing<span aria-hidden="true">.</span></h1>
+        <p class="writing-page__intro">
+          Investigações, aprendizados e ideias sobre engenharia de software. Textos escritos a partir de estudos,
+          experiências e problemas que valem a pena entender melhor.
+        </p>
+
+        {posts.length > 0 ? (
+          <div class="writing-list">
+            {posts.map((post) => (
+              <article class="writing-card">
+                <a class="writing-card__link" href={'/writing/' + post.id + '/'}>
+                  <div class="writing-card__meta">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString('pt-BR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                        timeZone: 'UTC',
+                      })}
+                    </time>
+                    <span>{post.data.tags.join(' · ')}</span>
+                  </div>
+                  <h2>{post.data.title}<span aria-hidden="true">↗</span></h2>
+                  <p>{post.data.description}</p>
+                  <span class="writing-card__read">Ler artigo <span aria-hidden="true">→</span></span>
+                </a>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="writing-empty">
+            <p class="eyebrow">EM CONSTRUÇÃO, SEM PRESSA</p>
+            <h2>Ideias precisam de tempo para amadurecer.</h2>
+            <p>
+              Os artigos serão publicados quando estiverem prontos. Este espaço não segue um calendário:
+              a prioridade é registrar aprendizados úteis, investigações e decisões técnicas com contexto.
+            </p>
+            <a class="text-link" href="/#contact">Conectar no LinkedIn ou GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</SiteLayout>
