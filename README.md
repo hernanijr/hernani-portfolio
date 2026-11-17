@@ -16,11 +16,11 @@ The site does not require a database, application server, analytics service, or 
 ## Architecture
 
 - `src/data/site.ts` centralizes profile details, contact links, technical focus areas, technologies, selected case studies, and experiments.
-- `src/pages/index.astro` composes the single public page from reusable Astro components.
+- `src/pages/index.astro` composes the homepage from reusable Astro components; `src/pages/writing/` contains the static Writing archive and article route.
 - `src/components/ProjectCaseStudy.astro` renders project data so future case studies can be added without rebuilding the page structure.
 - `src/layouts/SiteLayout.astro` provides document metadata, canonical URLs, Open Graph and Twitter metadata, and Person structured data.
 - `src/styles/global.css` contains the responsive design system, accessibility states, and reduced-motion behavior.
-- `src/pages/sitemap.xml.ts` generates the production sitemap; `public/robots.txt` points crawlers to it.
+- `src/content.config.ts` defines the typed Markdown Writing collection in `src/content/writing/`. `src/pages/sitemap.xml.ts` includes the homepage, Writing archive, and published articles; `public/robots.txt` points crawlers to it.
 - `wrangler.jsonc` configures the `dist` directory as Cloudflare static assets.
 
 The architecture uses explicit route files and content modules. The public site is currently written in Brazilian Portuguese; an English version can be added as a separate localization task.
@@ -78,6 +78,14 @@ For pull requests, review the Cloudflare preview before merging. Merging reviewe
 ### Add a project
 
 Add a selected case study to the `projects` array in `src/data/site.ts`. Provide its factual description, engineering decisions, technology details, public links, and attribution. The page renders each entry with `ProjectCaseStudy.astro`. Add smaller prototypes and technical experiments to the `experiments` array and label their maturity accurately. Do not add results, client claims, or ownership details that have not been confirmed.
+
+### Add a technical article
+
+Write articles as Markdown files in `src/content/writing/`. The filename becomes the public URL slug. Required frontmatter fields are `title`, `description`, and `pubDate`; optional fields include `updatedDate`, `tags`, and `draft`. Set `draft: true` to keep an article out of the public site and sitemap. See [the Writing guide](docs/writing.md).
+
+### Update professional experience
+
+Update the `professionalExperience` object in `src/data/site.ts`. Only publish employer names, roles, dates, and descriptions that are accurate and appropriate to share publicly.
 
 ### Configure contact links
 
