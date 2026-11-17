@@ -117,3 +117,15 @@ export const experiments = [
     backendRepository: null,
   },
 ] as const;
+
+export const professionalExperience = {
+  current: {
+    company: 'Grupo Boticário',
+    role: 'Pessoa Desenvolvedora Analista II · Full-stack',
+    period: 'Dezembro de 2025 — atual',
+    description:
+      'Atuação no desenvolvimento e evolução de aplicações, com trabalho full-stack envolvendo Node.js, TypeScript e React.',
+    technologies: ['Node.js', 'TypeScript', 'React'],
+  },
+  previousCompanies: ['FCamara', 'Loggi', 'Kunumi', 'Seedz', 'Montreal Informática'],
+} as const;
