@@ -1,8 +1,9 @@
 ---
 import ProjectCaseStudy from '../components/ProjectCaseStudy.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { expertiseAreas, experiments, projects, siteConfig, technologies } from '../data/site';
+import { expertiseAreas, experiments, professionalExperience, projects, siteConfig, technologies } from '../data/site';
 
 const title = 'Hernani Junior — Engenheiro de Software | Backend, APIs e Integrações';
 const description =
@@ -65,8 +66,39 @@ const description =
       </div>
     </section>
 
+
+    <section class="experience section-wrap" id="experience" aria-labelledby="experience-title">
+      <div class="section-label"><span>02</span><span>EXPERIÊNCIA</span></div>
+      <div class="experience__content">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TRAJETÓRIA PROFISSIONAL</p>
+            <h2 id="experience-title">Experiência em diferentes contextos de engenharia de software.</h2>
+          </div>
+          <p>Atuação profissional em desenvolvimento de aplicações e serviços, com foco em backend e experiência complementar em frontend.</p>
+        </div>
+        <article class="experience-item">
+          <p class="experience-item__period">{professionalExperience.current.period}</p>
+          <div class="experience-item__content">
+            <p class="eyebrow">{professionalExperience.current.role}</p>
+            <h3>{professionalExperience.current.company}</h3>
+            <p>{professionalExperience.current.description}</p>
+            <ul aria-label="Tecnologias utilizadas">
+              {professionalExperience.current.technologies.map((technology) => <li>{technology}</li>)}
+            </ul>
+          </div>
+        </article>
+        <div class="experience-previous">
+          <p class="eyebrow">EXPERIÊNCIAS ANTERIORES</p>
+          <ul>
+            {professionalExperience.previousCompanies.map((company) => <li>{company}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section class="expertise section-wrap" id="expertise" aria-labelledby="expertise-title">
-      <div class="section-label"><span>02</span><span>ÁREAS DE ATUAÇÃO</span></div>
+      <div class="section-label"><span>03</span><span>ÁREAS DE ATUAÇÃO</span></div>
       <div class="section-heading">
         <div>
           <p class="eyebrow">FOCO TÉCNICO</p>
@@ -92,7 +124,7 @@ const description =
     </section>
 
     <section class="projects-section section-wrap section-wrap--dark" id="projects" aria-labelledby="projects-title">
-      <div class="section-label"><span>03</span><span>PROJETO EM DESTAQUE</span></div>
+      <div class="section-label"><span>04</span><span>PROJETO EM DESTAQUE</span></div>
       <div class="section-heading section-heading--dark">
         <div>
           <p class="eyebrow">PROJETO REAL, DECISÕES TÉCNICAS</p>
@@ -106,7 +138,7 @@ const description =
     </section>
 
     <section class="experiments section-wrap section-wrap--tint" id="experiments" aria-labelledby="experiments-title">
-      <div class="section-label"><span>04</span><span>EXPERIMENTOS E ESTUDOS</span></div>
+      <div class="section-label"><span>05</span><span>EXPERIMENTOS E ESTUDOS</span></div>
       <div class="section-heading">
         <div>
           <p class="eyebrow">PROTÓTIPOS E EXPLORAÇÕES TÉCNICAS</p>
@@ -144,7 +176,7 @@ const description =
     </section>
 
     <section class="technology section-wrap" id="technology" aria-labelledby="technology-title">
-      <div class="section-label"><span>05</span><span>STACK E PRÁTICAS</span></div>
+      <div class="section-label"><span>06</span><span>STACK E PRÁTICAS</span></div>
       <div class="section-heading">
         <div>
           <p class="eyebrow">FERRAMENTAS E FUNDAMENTOS</p>
@@ -170,7 +202,7 @@ const description =
     </section>
 
     <section class="contact section-wrap" id="contact" aria-labelledby="contact-title">
-      <div class="section-label"><span>06</span><span>CONTATO PROFISSIONAL</span></div>
+      <div class="section-label"><span>07</span><span>CONTATO PROFISSIONAL</span></div>
       <div class="contact__content">
         <p class="eyebrow">CONVERSAS SOBRE ENGENHARIA</p>
         <h2 id="contact-title">Vamos conversar sobre <em>software e tecnologia.</em></h2>
@@ -189,22 +221,5 @@ const description =
       </div>
     </section>
   </main>
-  <footer class="site-footer">
-    <div class="site-footer__main">
-      <a class="wordmark wordmark--footer" href="#top">
-        <span class="wordmark__symbol" aria-hidden="true">h.</span>
-        <span>{siteConfig.name}<small>SOFTWARE ENGINEERING</small></span>
-      </a>
-      <p>Engenheiro de software com foco em backend, APIs e integração de sistemas.</p>
-      <div class="site-footer__links">
-        <a href={siteConfig.links.github} target="_blank" rel="noreferrer" data-analytics-event="github_click">GitHub <span aria-hidden="true">↗</span></a>
-        <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" data-analytics-event="linkedin_click">LinkedIn <span aria-hidden="true">↗</span></a>
-        <a href={siteConfig.links.email} data-analytics-event="contact_click">E-mail <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
-    <div class="site-footer__legal">
-      <span>© {new Date().getFullYear()} {siteConfig.name}. Todos os direitos reservados.</span>
-      <a href="#top">Voltar ao início ↑</a>
-    </div>
-  </footer>
+  <SiteFooter />
 </SiteLayout>
