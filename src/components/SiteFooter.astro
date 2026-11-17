@@ -1,0 +1,23 @@
+---
+import { siteConfig } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__main">
+    <a class="wordmark wordmark--footer" href="/#top">
+      <span class="wordmark__symbol" aria-hidden="true">h.</span>
+      <span>{siteConfig.name}<small>SOFTWARE ENGINEERING</small></span>
+    </a>
+    <p>Engenheiro de software com foco em backend, APIs e integração de sistemas.</p>
+    <div class="site-footer__links">
+      <a href="/writing/">Writing <span aria-hidden="true">↗</span></a>
+      <a href={siteConfig.links.github} target="_blank" rel="noreferrer" data-analytics-event="github_click">GitHub <span aria-hidden="true">↗</span></a>
+      <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" data-analytics-event="linkedin_click">LinkedIn <span aria-hidden="true">↗</span></a>
+      <a href={siteConfig.links.email} data-analytics-event="contact_click">E-mail <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <div class="site-footer__legal">
+    <span>© {new Date().getFullYear()} {siteConfig.name}. Todos os direitos reservados.</span>
+    <a href="/#top">Voltar ao início ↑</a>
+  </div>
+</footer>
