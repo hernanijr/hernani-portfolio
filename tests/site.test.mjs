@@ -44,13 +44,19 @@ test('selected work and experiments are clearly distinguished', async () => {
   assert.match(html, /A comunidade e seus organizadores definem os encontros/);
 });
 
-test('homepage includes all intended sections and excludes employer-specific content', async () => {
+test('homepage includes professional experience and all intended sections', async () => {
   const html = await readOutput('index.html');
 
-  for (const id of ['about', 'expertise', 'projects', 'experiments', 'technology', 'contact']) {
-    assert.match(html, new RegExp(`id="${id}"`), `Missing page section #${id}.`);
+  for (const id of ['about', 'experience', 'expertise', 'projects', 'experiments', 'technology', 'contact']) {
+    assert.ok(html.includes('id="' + id + '"'), 'Missing page section #' + id + '.');
   }
-  assert.doesNotMatch(html, /Grupo Boticário|FCamara/);
+  assert.ok(html.includes('Grupo Boticário'));
+  assert.ok(html.includes('Pessoa Desenvolvedora Analista II'));
+  assert.ok(html.includes('Dezembro de 2025 — atual'));
+  for (const company of ['FCamara', 'Loggi', 'Kunumi', 'Seedz', 'Montreal Informática']) {
+    assert.ok(html.includes(company), 'Missing previous employer ' + company + '.');
+  }
+  assert.ok(html.includes('href="/writing/">Writing'));
   assert.doesNotMatch(html, /Lorem ipsum|Your Name|Coming soon|TODO/);
 });
 
@@ -108,6 +114,28 @@ test('document uses semantic landmarks and accessible section headings', async (
   }
 });
 
+test('Writing archive is generated without placeholder articles', async () => {
+  const html = await readOutput('writing/index.html');
+
+  assert.ok(html.includes('<title>Writing | Hernani Junior'));
+  assert.ok(html.includes('<h1 id="writing-title">Writing'));
+  assert.ok(html.includes('Investigações, aprendizados e ideias sobre engenharia de software'));
+  assert.ok(html.includes('Os artigos serão publicados quando estiverem prontos'));
+  assert.ok(html.includes('href="/writing/">Writing'));
+  assert.ok(html.includes('name="description"'));
+});
+
+test('Writing collection and authoring guide support unpublished drafts', async () => {
+  const config = await readFile(new URL('../src/content.config.ts', import.meta.url), 'utf8');
+  const guide = await readFile(new URL('../docs/writing.md', import.meta.url), 'utf8');
+
+  assert.ok(config.includes("base: './src/content/writing'"));
+  assert.ok(config.includes('draft: z.boolean().default(false)'));
+  assert.ok(config.includes('title: z.string().min(1)'));
+  assert.ok(guide.includes('draft: true'));
+  assert.ok(guide.includes('There is no CMS, database, newsletter provider, or paid publishing service'));
+});
+
 test('robots, sitemap and static social assets are emitted', async () => {
   const [robots, sitemap] = await Promise.all([
     readOutput('robots.txt'),
@@ -121,6 +149,8 @@ test('robots, sitemap and static social assets are emitted', async () => {
   assert.ok(domain, 'The centralized production domain should be configured.');
   assert.match(robots, new RegExp(`Sitemap: ${domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/sitemap\\.xml`));
   assert.match(sitemap, /<loc>https:\/\/hernani\.dev\/<\/loc>/);
+  assert.ok(sitemap.includes('<loc>https://hernani.dev/writing/</loc>'));
+  assert.doesNotMatch(sitemap, /draft|placeholder/i);
   assert.match(html, /https:\/\/hernani\.dev\/og-image\.png/);
   const socialImage = await readOutputBytes('og-image.png');
   assert.equal(socialImage.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
