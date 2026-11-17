@@ -1,19 +1,23 @@
 ---
 import { siteConfig } from '../data/site';
+
+const isWritingPage = Astro.url.pathname.startsWith('/writing/');
+const sectionHref = (id: string) => isWritingPage ? '/#' + id : '#' + id;
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="wordmark" href="#top">
+    <a class="wordmark" href="/#top">
       <span class="wordmark__symbol" aria-hidden="true">h.</span>
       <span>{siteConfig.name}<small>ENGENHARIA DE SOFTWARE</small></span>
     </a>
     <nav aria-label="Navegação principal">
-      <a href="#about">Sobre</a>
-      <a href="#expertise">Atuação</a>
-      <a href="#projects">Projetos</a>
-      <a href="#technology">Stack</a>
-      <a class="site-header__contact" href="#contact">Contato <span aria-hidden="true">↗</span></a>
+      <a href={sectionHref('about')}>Sobre</a>
+      <a href={sectionHref('experience')}>Experiência</a>
+      <a href={sectionHref('projects')}>Projetos</a>
+      <a href="/writing/" aria-current={isWritingPage ? 'page' : undefined}>Writing</a>
+      <a href={sectionHref('technology')}>Stack</a>
+      <a class="site-header__contact" href={sectionHref('contact')}>Contato <span aria-hidden="true">↗</span></a>
     </nav>
   </div>
 </header>
