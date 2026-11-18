@@ -124,6 +124,7 @@ export const englishContent = {
         summary:
           'An experiment in LLM-assisted content generation and external API integration, combining data collection and language-model processing.',
         stack: ['Next.js', 'OpenAI API', 'Supabase', 'X API'],
+        backendRepository: null,
         repository: 'https://github.com/hernanijr/bomdiapraquem',
       },
       {
@@ -141,6 +142,7 @@ export const englishContent = {
         summary:
           'An experiment with Go and Kafka exploring an in-memory order book, order matching, concurrent processing, and partial execution.',
         stack: ['Go', 'Kafka', 'Concurrency', 'Order book'],
+        backendRepository: null,
         repository: 'https://github.com/hernanijr/homebroker',
       },
     ],

@@ -123,7 +123,7 @@ a:focus-visible {
 .site-header nav {
   display: flex;
   align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.8rem);
+  gap: clamp(0.75rem, 1.8vw, 1.8rem);
   font-size: 0.82rem;
 }
 
@@ -135,6 +135,18 @@ a:focus-visible {
 .site-footer__legal a:hover {
   text-decoration: underline;
   text-underline-offset: 0.35em;
+}
+
+.site-header__language {
+  display: inline-flex;
+  min-width: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
 .site-header__contact {

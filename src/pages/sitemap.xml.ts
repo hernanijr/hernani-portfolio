@@ -22,12 +22,12 @@ function renderUrlGroup(urls: SitemapUrl[]): string {
     alternates.push('    <xhtml:link rel="alternate" hreflang="x-default" href="' + xmlEscape(defaultUrl.url) + '" />');
   }
 
-  return [
+  return urls.map((item) => [
     '  <url>',
-    '    <loc>' + xmlEscape(urls[0].url) + '</loc>',
+    '    <loc>' + xmlEscape(item.url) + '</loc>',
     ...alternates,
     '  </url>',
-  ].join('\n');
+  ].join('\n')).join('\n');
 }
 
 export const GET: APIRoute = async () => {

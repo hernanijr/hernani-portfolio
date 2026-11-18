@@ -8,11 +8,15 @@ import { expertiseAreas, experiments, professionalExperience, projects, siteConf
 const title = 'Hernani Junior — Engenheiro de Software | Backend, APIs e Integrações';
 const description =
   'Engenheiro de software em Belo Horizonte com foco em backend, APIs, integração de sistemas e aplicações confiáveis. Node.js, TypeScript e NestJS.';
+const alternates = [
+  { locale: 'pt-BR' as const, url: siteConfig.domain + '/' },
+  { locale: 'en' as const, url: siteConfig.domain + '/en/' },
+];
 ---
 
-<SiteLayout title={title} description={description}>
+<SiteLayout title={title} description={description} locale="pt-BR" alternates={alternates}>
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
-  <SiteHeader />
+  <SiteHeader locale="pt-BR" languageHref="/en/" />
   <main id="main">
     <section class="hero section-wrap" aria-labelledby="hero-title">
       <div class="hero__copy">
@@ -133,7 +137,7 @@ const description =
         <p>Um estudo de caso sobre requisitos, decisões de implementação, fluxo editorial e entrega de um produto web.</p>
       </div>
       {projects.map((project, index) => (
-        <ProjectCaseStudy project={project} index={index + 1} total={projects.length} />
+        <ProjectCaseStudy project={project} index={index + 1} total={projects.length} locale="pt-BR" />
       ))}
     </section>
 
@@ -221,5 +225,5 @@ const description =
       </div>
     </section>
   </main>
-  <SiteFooter />
+  <SiteFooter locale="pt-BR" />
 </SiteLayout>

@@ -78,7 +78,7 @@ const defaultUrl = languageAlternates.find((item) => item.locale === 'pt-BR')?.u
     <meta property="og:type" content={openGraphType} />
     {articlePublishedTime && <meta property="article:published_time" content={articlePublishedTime} />}
     <meta property="og:locale" content={ogLocale} />
-    {isEnglish && <meta property="og:locale:alternate" content="pt_BR" />}
+    {isEnglish && alternates.some((item) => item.locale === 'pt-BR') && <meta property="og:locale:alternate" content="pt_BR" />}
     {!isEnglish && alternates.some((item) => item.locale === 'en') && <meta property="og:locale:alternate" content="en_US" />}
     <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:title" content={title} />
