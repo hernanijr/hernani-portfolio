@@ -14,6 +14,8 @@ const writing = defineCollection({
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    locale: z.enum(['pt-BR', 'en']).default('pt-BR'),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).optional(),
   }),
 });
 
