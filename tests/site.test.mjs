@@ -53,6 +53,10 @@ test('homepage includes professional experience and all intended sections', asyn
   assert.ok(html.includes('Grupo Boticário'));
   assert.ok(html.includes('Pessoa Desenvolvedora Analista II'));
   assert.ok(html.includes('Dezembro de 2025 — atual'));
+  assert.ok(html.includes('atuação predominante em backend e participação em demandas full-stack'));
+  assert.ok(html.includes('Node.js'));
+  assert.ok(html.includes('NestJS'));
+  assert.ok(html.includes('React'));
   for (const company of ['FCamara', 'Loggi', 'Kunumi', 'Seedz', 'Montreal Informática']) {
     assert.ok(html.includes(company), 'Missing previous employer ' + company + '.');
   }
@@ -134,6 +138,24 @@ test('Writing collection and authoring guide support unpublished drafts', async 
   assert.ok(config.includes('title: z.string().min(1)'));
   assert.ok(guide.includes('draft: true'));
   assert.ok(guide.includes('There is no CMS, database, newsletter provider, or paid publishing service'));
+});
+
+test('Cloudflare static assets include security headers and keep workers.dev previews out of search', async () => {
+  const headers = await readOutput('_headers');
+
+  for (const header of [
+    'X-Content-Type-Options: nosniff',
+    'X-Frame-Options: DENY',
+    'Referrer-Policy: strict-origin-when-cross-origin',
+    'Permissions-Policy:',
+    'Strict-Transport-Security: max-age=31536000',
+    'Content-Security-Policy:',
+    "frame-ancestors 'none'",
+    "https://:version.:subdomain.workers.dev/*",
+    'X-Robots-Tag: noindex',
+  ]) {
+    assert.ok(headers.includes(header), `Missing security header or rule: ${header}`);
+  }
 });
 
 test('robots, sitemap and static social assets are emitted', async () => {
