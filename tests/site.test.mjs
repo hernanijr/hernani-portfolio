@@ -26,7 +26,7 @@ test('English homepage has complete localized content and reciprocal language me
   const html = await readOutput('en/index.html');
 
   assert.match(html, /<html lang="en">/);
-  assert.match(html, /<title>Hernani Junior — Software Engineer \\| Backend, APIs &amp; Integrations<\\/title>/);
+  assert.match(html, /<title>Hernani Junior — Software Engineer \| Backend, APIs &amp; Integrations<\/title>/);
   assert.match(html, /<link rel="canonical" href="https:\/\/hernani\.dev\/en\/">/);
   assert.match(html, /<link rel="alternate" hreflang="pt-BR" href="https:\/\/hernani\.dev\/">/);
   assert.match(html, /<link rel="alternate" hreflang="en" href="https:\/\/hernani\.dev\/en\/">/);
