@@ -92,7 +92,7 @@ test('English homepage contains all major sections and translated calls to actio
     assert.ok(html.includes('id="' + id + '"'), 'Missing English page section #' + id + '.');
   }
   assert.match(html, /href="\/en\/writing\/">Writing/);
-  assert.match(html, new RegExp('<a[^>]+href="/writing/"[^>]*>PT</a>'));
+  assert.match(html, new RegExp('<a[^>]+href="/"[^>]*>PT</a>'));
   assert.match(html, /Skip to content/);
   assert.match(html, /THE CHALLENGE/);
   assert.match(html, /ENGINEERING DECISIONS/);
