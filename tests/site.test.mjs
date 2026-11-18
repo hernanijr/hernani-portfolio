@@ -80,7 +80,7 @@ test('homepage includes professional experience and all intended sections', asyn
     assert.ok(html.includes(company), 'Missing previous employer ' + company + '.');
   }
   assert.ok(html.includes('href="/writing/">Writing'));
-  assert.ok(html.includes('href="/en/">EN'));
+  assert.match(html, new RegExp('<a[^>]+href="/en/"[^>]*>EN</a>'));
   assert.doesNotMatch(html, /Lorem ipsum|Your Name|Coming soon|TODO/);
 });
 
@@ -174,7 +174,7 @@ test('Writing archives are generated in both locales without placeholder article
   assert.ok(ptHtml.includes('<h1 id="writing-title">Writing'));
   assert.ok(ptHtml.includes('Investigações, aprendizados e ideias sobre engenharia de software'));
   assert.ok(ptHtml.includes('Os artigos serão publicados quando estiverem prontos'));
-  assert.ok(ptHtml.includes('href="/en/writing/">EN'));
+  assert.match(ptHtml, new RegExp('<a[^>]+href="/en/writing/"[^>]*>EN</a>'));
   assert.ok(ptHtml.includes('name="description"'));
 
   assert.ok(enHtml.includes('<title>Writing | Hernani Junior'));
