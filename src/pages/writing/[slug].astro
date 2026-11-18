@@ -1,0 +1,96 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { siteConfig } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing', ({ data }) => data.draft !== true);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const wordCount = (post.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.ceil(wordCount / 220));
+const canonicalUrl = new URL('/writing/' + post.id + '/', siteConfig.domain).href;
+const dateModified = post.data.updatedDate ?? post.data.pubDate;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': canonicalUrl + '#article',
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+  headline: post.data.title,
+  description: post.data.description,
+  image: siteConfig.domain + '/og-image.png',
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: dateModified.toISOString(),
+  author: { '@id': siteConfig.domain + '/#hernani', name: siteConfig.name },
+  publisher: { '@id': siteConfig.domain + '/#hernani', name: siteConfig.name },
+  keywords: post.data.tags,
+};
+
+const title = post.data.title + ' | Hernani Junior';
+---
+
+<SiteLayout
+  title={title}
+  description={post.data.description}
+  openGraphType="article"
+  articlePublishedTime={post.data.pubDate.toISOString()}
+  extraStructuredData={articleSchema}
+>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <SiteHeader />
+  <main id="main">
+    <article class="writing-article-page section-wrap">
+      <div class="writing-article">
+        <a class="writing-back" href="/writing/">← Voltar para Writing</a>
+        <header class="writing-article__header">
+          <p class="eyebrow">ESCRITA TÉCNICA</p>
+          <h1>{post.data.title}</h1>
+          <p class="writing-article__description">{post.data.description}</p>
+          <div class="writing-article__meta">
+            <time datetime={post.data.pubDate.toISOString()}>
+              Publicado em {post.data.pubDate.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                timeZone: 'UTC',
+              })}
+            </time>
+            <span>{readingMinutes} min de leitura</span>
+            {post.data.updatedDate && (
+              <span>
+                Atualizado em {post.data.updatedDate.toLocaleDateString('pt-BR', {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric',
+                  timeZone: 'UTC',
+                })}
+              </span>
+            )}
+          </div>
+          {post.data.tags.length > 0 && (
+            <ul class="writing-tags" aria-label="Assuntos do artigo">
+              {post.data.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          )}
+        </header>
+        <div class="writing-article__body">
+          <Content />
+        </div>
+        <footer class="writing-article__footer">
+          <a class="text-link" href="/writing/">← Todos os artigos</a>
+          <a class="text-link" href="/#contact">Contato profissional <span aria-hidden="true">↗</span></a>
+        </footer>
+      </div>
+    </article>
+  </main>
+  <SiteFooter />
+</SiteLayout>
