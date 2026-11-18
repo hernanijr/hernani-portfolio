@@ -81,6 +81,7 @@ test('homepage includes professional experience and all intended sections', asyn
   }
   assert.ok(html.includes('href="/writing/">Writing'));
   assert.match(html, new RegExp('<a[^>]+href="/en/"[^>]*>EN</a>'));
+  assert.match(html, /aria-label="EN — Read this website in English"/);
   assert.doesNotMatch(html, /Lorem ipsum|Your Name|Coming soon|TODO/);
 });
 

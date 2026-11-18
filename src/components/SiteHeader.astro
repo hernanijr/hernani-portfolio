@@ -29,7 +29,7 @@ const switchHref = languageHref ?? (isEnglish ? '/' : '/en/');
       <a href={writingHref} aria-current={isWritingPage ? 'page' : undefined}>Writing</a>
       <a href={sectionHref('technology')}>{isEnglish ? 'Stack' : 'Stack'}</a>
       <a class="site-header__contact" href={sectionHref('contact')}>{isEnglish ? 'Contact' : 'Contato'} <span aria-hidden="true">↗</span></a>
-      <a class="site-header__language" href={switchHref} lang={isEnglish ? 'pt-BR' : 'en'} aria-label={isEnglish ? 'Ler este site em português' : 'Read this website in English'}>{isEnglish ? 'PT' : 'EN'}</a>
+      <a class="site-header__language" href={switchHref} lang={isEnglish ? 'pt-BR' : 'en'} aria-label={isEnglish ? 'PT — Ler este site em português' : 'EN — Read this website in English'}>{isEnglish ? 'PT' : 'EN'}</a>
     </nav>
   </div>
 </header>
