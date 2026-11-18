@@ -121,11 +121,11 @@ export const experiments = [
 export const professionalExperience = {
   current: {
     company: 'Grupo Boticário',
-    role: 'Pessoa Desenvolvedora Analista II · Full-stack',
+    role: 'Desenvolvedor de Software',
     period: 'Dezembro de 2025 — atual',
     description:
       'Desenvolvimento e evolução de soluções corporativas, com atuação predominante em backend e participação em demandas full-stack. Implementação e manutenção de serviços, APIs e integrações utilizando Node.js, TypeScript e NestJS, além de contribuições em aplicações React.',
     technologies: ['Node.js', 'TypeScript', 'NestJS', 'React'],
   },
-  previousCompanies: ['FCamara', 'Loggi', 'Kunumi', 'Seedz', 'Montreal Informática'],
+  previousCompanies: ['FCamara', 'Loggi', 'Kunumi', 'Ecobonuz', 'Seedz', 'Montreal Informática'],
 } as const;
