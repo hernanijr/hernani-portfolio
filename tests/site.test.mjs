@@ -51,13 +51,13 @@ test('homepage includes professional experience and all intended sections', asyn
     assert.ok(html.includes('id="' + id + '"'), 'Missing page section #' + id + '.');
   }
   assert.ok(html.includes('Grupo Boticário'));
-  assert.ok(html.includes('Pessoa Desenvolvedora Analista II'));
+  assert.ok(html.includes('Desenvolvedor de Software'));
   assert.ok(html.includes('Dezembro de 2025 — atual'));
   assert.ok(html.includes('atuação predominante em backend e participação em demandas full-stack'));
   assert.ok(html.includes('Node.js'));
   assert.ok(html.includes('NestJS'));
   assert.ok(html.includes('React'));
-  for (const company of ['FCamara', 'Loggi', 'Kunumi', 'Seedz', 'Montreal Informática']) {
+  for (const company of ['FCamara', 'Loggi', 'Kunumi', 'Ecobonuz', 'Seedz', 'Montreal Informática']) {
     assert.ok(html.includes(company), 'Missing previous employer ' + company + '.');
   }
   assert.ok(html.includes('href="/writing/">Writing'));
