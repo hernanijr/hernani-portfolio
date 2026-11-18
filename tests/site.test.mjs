@@ -26,7 +26,7 @@ test('English homepage has complete localized content and reciprocal language me
   const html = await readOutput('en/index.html');
 
   assert.match(html, /<html lang="en">/);
-  assert.match(html, /<title>Hernani Junior — Software Engineer \| Backend, APIs & Integrations<\/title>/);
+  assert.match(html, /<title>Hernani Junior — Software Engineer \\| Backend, APIs &amp; Integrations<\\/title>/);
   assert.match(html, /<link rel="canonical" href="https:\/\/hernani\.dev\/en\/">/);
   assert.match(html, /<link rel="alternate" hreflang="pt-BR" href="https:\/\/hernani\.dev\/">/);
   assert.match(html, /<link rel="alternate" hreflang="en" href="https:\/\/hernani\.dev\/en\/">/);
@@ -180,7 +180,7 @@ test('Writing archives are generated in both locales without placeholder article
   assert.ok(enHtml.includes('<title>Writing | Hernani Junior'));
   assert.ok(enHtml.includes('<html lang="en">'));
   assert.ok(enHtml.includes('Articles will be published when they are ready'));
-  assert.ok(enHtml.includes('href="/writing/">PT'));
+  assert.match(enHtml, new RegExp('<a[^>]+href="/writing/"[^>]*>PT</a>'));
   assert.ok(enHtml.includes('<link rel="alternate" hreflang="pt-BR"'));
   assert.ok(enHtml.includes('<link rel="alternate" hreflang="en"'));
 });
