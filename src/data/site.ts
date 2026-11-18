@@ -124,8 +124,8 @@ export const professionalExperience = {
     role: 'Pessoa Desenvolvedora Analista II · Full-stack',
     period: 'Dezembro de 2025 — atual',
     description:
-      'Atuação no desenvolvimento e evolução de aplicações, com trabalho full-stack envolvendo Node.js, TypeScript e React.',
-    technologies: ['Node.js', 'TypeScript', 'React'],
+      'Desenvolvimento e evolução de soluções corporativas, com atuação predominante em backend e participação em demandas full-stack. Implementação e manutenção de serviços, APIs e integrações utilizando Node.js, TypeScript e NestJS, além de contribuições em aplicações React.',
+    technologies: ['Node.js', 'TypeScript', 'NestJS', 'React'],
   },
   previousCompanies: ['FCamara', 'Loggi', 'Kunumi', 'Seedz', 'Montreal Informática'],
 } as const;
