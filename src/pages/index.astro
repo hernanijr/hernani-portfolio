@@ -3,7 +3,7 @@ import ProjectCaseStudy from '../components/ProjectCaseStudy.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { expertiseAreas, experiments, professionalExperience, projects, siteConfig, technologies } from '../data/site';
+import { expertiseAreas, professionalExperience, projects, siteConfig, technologies } from '../data/site';
 
 const title = 'Hernani Junior — Engenheiro de Software | Backend, APIs e Integrações';
 const description =
@@ -141,46 +141,10 @@ const alternates = [
       ))}
     </section>
 
-    <section class="experiments section-wrap section-wrap--tint" id="experiments" aria-labelledby="experiments-title">
-      <div class="section-label"><span>05</span><span>EXPERIMENTOS E ESTUDOS</span></div>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">PROTÓTIPOS E EXPLORAÇÕES TÉCNICAS</p>
-          <h2 id="experiments-title">Explorar ideias também faz parte de aprender engenharia.</h2>
-        </div>
-        <p>Projetos pessoais em diferentes estágios. São experimentos técnicos, não produtos apresentados como soluções prontas para produção.</p>
-      </div>
-      <div class="experiment-grid">
-        {
-          experiments.map((experiment) => (
-            <article class="experiment-card">
-              <div class="experiment-card__meta">
-                <span>{experiment.status}</span>
-                <span aria-hidden="true">↗</span>
-              </div>
-              <h3>{experiment.name}</h3>
-              <p>{experiment.summary}</p>
-              <ul aria-label={`Tecnologias de ${experiment.name}`}>
-                {experiment.stack.map((technology) => <li>{technology}</li>)}
-              </ul>
-              <div class="experiment-card__links">
-                {experiment.backendRepository ? (
-                  <>
-                    <a href={experiment.repository} target="_blank" rel="noreferrer">Frontend <span aria-hidden="true">↗</span></a>
-                    <a href={experiment.backendRepository} target="_blank" rel="noreferrer">Backend <span aria-hidden="true">↗</span></a>
-                  </>
-                ) : (
-                  <a href={experiment.repository} target="_blank" rel="noreferrer">Ver repositório <span aria-hidden="true">↗</span></a>
-                )}
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
+
 
     <section class="technology section-wrap" id="technology" aria-labelledby="technology-title">
-      <div class="section-label"><span>06</span><span>STACK E PRÁTICAS</span></div>
+      <div class="section-label"><span>05</span><span>STACK E PRÁTICAS</span></div>
       <div class="section-heading">
         <div>
           <p class="eyebrow">FERRAMENTAS E FUNDAMENTOS</p>
@@ -206,7 +170,7 @@ const alternates = [
     </section>
 
     <section class="contact section-wrap" id="contact" aria-labelledby="contact-title">
-      <div class="section-label"><span>07</span><span>CONTATO PROFISSIONAL</span></div>
+      <div class="section-label"><span>06</span><span>CONTATO PROFISSIONAL</span></div>
       <div class="contact__content">
         <p class="eyebrow">CONVERSAS SOBRE ENGENHARIA</p>
         <h2 id="contact-title">Vamos conversar sobre <em>software e tecnologia.</em></h2>

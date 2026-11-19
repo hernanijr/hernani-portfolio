@@ -115,9 +115,9 @@ a:focus-visible {
   margin-top: 0.35rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 400;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .site-header nav {
@@ -145,7 +145,7 @@ a:focus-visible {
   padding: 0.35rem 0.45rem;
   border: 1px solid var(--line);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -181,12 +181,7 @@ a:focus-visible {
   color: var(--paper);
 }
 
-.section-wrap--tint {
-  max-width: none;
-  padding-right: max(3rem, calc((100% - 76rem) / 2));
-  padding-left: max(3rem, calc((100% - 76rem) / 2));
-  background: var(--paper-deep);
-}
+
 
 .eyebrow,
 .section-label,
@@ -245,6 +240,11 @@ h2,
 h3,
 p {
   margin-top: 0;
+}
+
+h3 {
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 h1,
@@ -460,7 +460,6 @@ h2 em {
 .intro,
 .expertise,
 .projects-section,
-.experiments,
 .technology,
 .process,
 .contact {
@@ -543,7 +542,7 @@ h2 em {
   padding-top: 0.5rem;
   color: var(--orange);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .expertise-item h3,
@@ -585,7 +584,7 @@ h2 em {
   padding: 0.36rem 0.55rem;
   border: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
 }
 
 .section-heading--dark > p {
@@ -639,6 +638,19 @@ h2 em {
   justify-content: space-between;
   gap: 3rem;
   padding: 2.5rem 0 2rem;
+}
+
+.project__intro > div,
+.project__narrative > div,
+.project__details > * {
+  min-width: 0;
+}
+
+.project__summary,
+.project__narrative p:not(.eyebrow),
+.project__attribution {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .project__intro h3 {
@@ -719,7 +731,7 @@ h2 em {
   grid-row: span 2;
   color: var(--orange);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .architecture__node--cms > span {
@@ -788,6 +800,12 @@ h2 em {
   border-bottom: 1px solid rgb(243 246 247 / 24%);
 }
 
+.project__stack dt,
+.project__stack dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .project__stack dt {
   color: #cbd7d5;
   font-size: 0.75rem;
@@ -830,7 +848,7 @@ h2 em {
   padding: 0.5rem 0.7rem;
   border: 1px solid #aeb8ac;
   color: var(--ink);
-  font-size: 0.77rem;
+  font-size: 0.8125rem;
 }
 
 .process-list {
@@ -957,7 +975,7 @@ h2 em {
   border-top: 1px solid rgb(243 246 247 / 24%);
   color: #cbd7d5;
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .site-footer__legal a {
@@ -971,8 +989,7 @@ h2 em {
   }
 
   .section-wrap,
-  .section-wrap--dark,
-  .section-wrap--tint {
+  .section-wrap--dark {
     padding-right: 2rem;
     padding-left: 2rem;
   }
@@ -989,7 +1006,6 @@ h2 em {
   .intro,
   .expertise,
   .projects-section,
-  .experiments,
   .technology,
   .contact {
     grid-template-columns: 1fr;
@@ -998,7 +1014,6 @@ h2 em {
 
   .expertise-list,
   .project,
-  .experiment-grid,
   .technology-list,
   .contact__aside {
     grid-column: 1;
@@ -1042,7 +1057,7 @@ h2 em {
     width: 100%;
     justify-content: space-between;
     gap: 0.5rem;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
   }
 
   .site-header nav a {
@@ -1055,8 +1070,7 @@ h2 em {
   }
 
   .section-wrap,
-  .section-wrap--dark,
-  .section-wrap--tint {
+  .section-wrap--dark {
     padding: 4.5rem 1.25rem;
   }
 
@@ -1069,7 +1083,7 @@ h2 em {
   }
 
   .hero__copy .eyebrow {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
   }
 
   h1 {
@@ -1170,12 +1184,12 @@ h2 em {
   }
 
   .architecture__node strong {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     line-height: 1.2;
   }
 
   .architecture__node small {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     line-height: 1.2;
   }
 
@@ -1190,7 +1204,12 @@ h2 em {
   }
 
   .project__stack div {
-    grid-template-columns: 5.2rem 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .project__stack dt {
+    margin-bottom: 0.1rem;
   }
 
   .technology-group {
@@ -1237,7 +1256,7 @@ h2 em {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.6rem;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -1251,80 +1270,8 @@ h2 em {
 }
 
 
-.experiment-grid {
-  display: grid;
-  grid-column: 2;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.2rem;
-}
-
-.experiment-card {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  padding: 1.25rem;
-  border: 1px solid var(--line);
-  background: rgb(255 255 255 / 48%);
-}
-
-.experiment-card__meta {
-  display: flex;
-  justify-content: space-between;
-  color: var(--green);
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.experiment-card h3 {
-  margin: 1.6rem 0 0.65rem;
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: -0.035em;
-  overflow-wrap: anywhere;
-}
-
-.experiment-card > p {
-  flex: 1;
-  margin-bottom: 1.2rem;
-  color: var(--muted);
-  font-size: 0.875rem;
-}
-
-.experiment-card ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 1.2rem;
-  padding: 0;
-  list-style: none;
-}
-
-.experiment-card li {
-  padding: 0.3rem 0.45rem;
-  border: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.experiment-card__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--line);
-  font-size: 0.8125rem;
-}
-
-.experiment-card__links a,
-.site-footer__links a {
-  text-decoration-color: var(--line);
-}
-
-.experiment-card__links span,
 .site-footer__links span {
-  color: var(--green);
+  color: var(--lime);
 }
 
 .contact__links {
@@ -1352,10 +1299,6 @@ h2 em {
 }
 
 @media (max-width: 900px) {
-  .experiment-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .site-footer__links {
     grid-column: 1 / -1;
     justify-content: flex-start;
@@ -1363,10 +1306,6 @@ h2 em {
 }
 
 @media (max-width: 640px) {
-  .experiment-grid {
-    grid-template-columns: 1fr;
-  }
-
   .contact__links {
     align-items: flex-start;
     flex-direction: column;
@@ -1407,7 +1346,7 @@ h2 em {
 
 .experience-item__content .eyebrow {
   margin-bottom: 0.55rem;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .experience-item h3 {
@@ -1441,7 +1380,7 @@ h2 em {
   padding: 0.35rem 0.6rem;
   border: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
 }
 
 .experience-previous {
@@ -1453,7 +1392,7 @@ h2 em {
 
 .experience-previous .eyebrow {
   margin-bottom: 0;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 /* Writing archive and article pages */
@@ -1521,7 +1460,7 @@ h2 em {
   gap: 0.5rem 1.5rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .writing-card h2 {
@@ -1622,7 +1561,7 @@ h2 em {
   margin-top: 1.2rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .writing-tags {

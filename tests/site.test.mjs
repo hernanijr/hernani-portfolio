@@ -51,25 +51,22 @@ test('profile offers professional contact links instead of client-acquisition CT
   assert.doesNotMatch(html, /Vamos conversar sobre seu projeto|Como posso ajudar|TEM UM PROBLEMA PARA RESOLVER/);
 });
 
-test('selected work and experiments are clearly distinguished', async () => {
+test('featured work is curated without unfinished experiments', async () => {
   const html = await readOutput('index.html');
   const indexLabels = [...html.matchAll(/<span class="project__index"[^>]*>([\s\S]*?)<\/span>/g)]
     .map(([, content]) => content.replace(/\s+/g, ' ').trim());
 
   assert.deepEqual(indexLabels, ['01 / 01']);
   assert.match(html, /Talk BH/);
-  assert.match(html, /Bom Dia Pra Quem/);
-  assert.match(html, /Cortex/);
-  assert.match(html, /Homebroker/);
-  assert.match(html, /Protótipo/);
-  assert.match(html, /experimentos técnicos, não produtos apresentados como soluções prontas para produção/);
   assert.match(html, /A comunidade e seus organizadores definem os encontros/);
+  assert.doesNotMatch(html, /Bom Dia Pra Quem|Cortex|Homebroker/);
+  assert.doesNotMatch(html, /id="experiments"/);
 });
 
 test('homepage includes professional experience and all intended sections', async () => {
   const html = await readOutput('index.html');
 
-  for (const id of ['about', 'experience', 'expertise', 'projects', 'experiments', 'technology', 'contact']) {
+  for (const id of ['about', 'experience', 'expertise', 'projects', 'technology', 'contact']) {
     assert.ok(html.includes('id="' + id + '"'), 'Missing page section #' + id + '.');
   }
   for (const phrase of ['Grupo Boticário', 'Desenvolvedor de Software', 'Dezembro de 2025 — atual',
@@ -88,7 +85,7 @@ test('homepage includes professional experience and all intended sections', asyn
 test('English homepage contains all major sections and translated calls to action', async () => {
   const html = await readOutput('en/index.html');
 
-  for (const id of ['about', 'experience', 'expertise', 'projects', 'experiments', 'technology', 'contact']) {
+  for (const id of ['about', 'experience', 'expertise', 'projects', 'technology', 'contact']) {
     assert.ok(html.includes('id="' + id + '"'), 'Missing English page section #' + id + '.');
   }
   assert.match(html, /href="\/en\/writing\/">Writing/);

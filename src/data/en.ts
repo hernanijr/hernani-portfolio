@@ -112,40 +112,6 @@ export const englishContent = {
       website: 'https://talk.bh/',
       repository: 'https://github.com/hernanijr/talkbh',
     },
-    experimentsLabel: 'EXPERIMENTS AND STUDIES',
-    experimentsEyebrow: 'PROTOTYPES AND TECHNICAL EXPLORATIONS',
-    experimentsTitle: 'Exploring ideas is also part of learning engineering.',
-    experimentsIntro:
-      'Personal projects at different stages. These are technical experiments, not products presented as production-ready solutions.',
-    experiments: [
-      {
-        name: 'Bom Dia Pra Quem',
-        status: 'Prototype',
-        summary:
-          'An experiment in LLM-assisted content generation and external API integration, combining data collection and language-model processing.',
-        stack: ['Next.js', 'OpenAI API', 'Supabase', 'X API'],
-        backendRepository: null,
-        repository: 'https://github.com/hernanijr/bomdiapraquem',
-      },
-      {
-        name: 'Cortex',
-        status: 'Full-stack prototype',
-        summary:
-          'A productivity application exploring the organization of tasks, projects, areas, and notes, with a React frontend and a dedicated API.',
-        stack: ['Next.js', 'React', 'NestJS', 'Prisma', 'PostgreSQL'],
-        repository: 'https://github.com/hernanijr/cortex-frontend',
-        backendRepository: 'https://github.com/hernanijr/cortex-backend',
-      },
-      {
-        name: 'Homebroker',
-        status: 'Systems experiment',
-        summary:
-          'An experiment with Go and Kafka exploring an in-memory order book, order matching, concurrent processing, and partial execution.',
-        stack: ['Go', 'Kafka', 'Concurrency', 'Order book'],
-        backendRepository: null,
-        repository: 'https://github.com/hernanijr/homebroker',
-      },
-    ],
     technologyLabel: 'STACK AND PRACTICES',
     technologyEyebrow: 'TOOLS AND FUNDAMENTALS',
     technologyTitle: 'Technology chosen to fit the problem.',
