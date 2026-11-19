@@ -88,35 +88,7 @@ export const projects = [
   },
 ] as const;
 
-export const experiments = [
-  {
-    name: 'Bom Dia Pra Quem',
-    status: 'Protótipo',
-    summary:
-      'Experimento com geração de conteúdo assistida por LLM e integração de APIs externas, combinando coleta de dados e processamento com modelos de linguagem.',
-    stack: ['Next.js', 'OpenAI API', 'Supabase', 'X API'],
-    repository: 'https://github.com/hernanijr/bomdiapraquem',
-    backendRepository: null,
-  },
-  {
-    name: 'Cortex',
-    status: 'Protótipo full-stack',
-    summary:
-      'Aplicação de produtividade explorando organização de tarefas, projetos, áreas e notas, com frontend React e API própria.',
-    stack: ['Next.js', 'React', 'NestJS', 'Prisma', 'PostgreSQL'],
-    repository: 'https://github.com/hernanijr/cortex-frontend',
-    backendRepository: 'https://github.com/hernanijr/cortex-backend',
-  },
-  {
-    name: 'Homebroker',
-    status: 'Experimento de sistemas',
-    summary:
-      'Experimento em Go e Kafka para explorar livro de ofertas em memória, matching de ordens, processamento concorrente e execução parcial.',
-    stack: ['Go', 'Kafka', 'Concorrência', 'Order book'],
-    repository: 'https://github.com/hernanijr/homebroker',
-    backendRepository: null,
-  },
-] as const;
+
 
 export const professionalExperience = {
   current: {
