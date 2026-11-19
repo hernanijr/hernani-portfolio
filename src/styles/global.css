@@ -1327,7 +1327,10 @@ h2 em {
   text-decoration-color: var(--line);
 }
 
-.experiment-card__links span,
+.experiment-card__links span {
+  color: var(--green);
+}
+
 .site-footer__links span {
   color: var(--lime);
 }
