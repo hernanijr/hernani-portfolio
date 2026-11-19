@@ -3,18 +3,23 @@ import { getCollection } from 'astro:content';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { siteConfig } from '../../data/site';
 
-const posts = (await getCollection('writing', ({ data }) => data.draft !== true))
+const posts = (await getCollection('writing', ({ data }) => data.draft !== true && data.locale === 'pt-BR'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const title = 'Writing | Hernani Junior — Engenharia de Software';
 const description =
   'Artigos, investigações e aprendizados sobre engenharia de software, backend, APIs e integração de sistemas.';
+const alternates = [
+  { locale: 'pt-BR' as const, url: siteConfig.domain + '/writing/' },
+  { locale: 'en' as const, url: siteConfig.domain + '/en/writing/' },
+];
 ---
 
-<SiteLayout title={title} description={description}>
+<SiteLayout title={title} description={description} locale="pt-BR" alternates={alternates}>
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
-  <SiteHeader />
+  <SiteHeader locale="pt-BR" languageHref="/en/writing/" />
   <main id="main">
     <section class="writing-page section-wrap" aria-labelledby="writing-title">
       <div class="section-label"><span>01</span><span>ARTIGOS E ANOTAÇÕES</span></div>
@@ -30,7 +35,7 @@ const description =
           <div class="writing-list">
             {posts.map((post) => (
               <article class="writing-card">
-                <a class="writing-card__link" href={'/writing/' + post.id + '/'}>
+                <a class="writing-card__link" href={'/writing/' + (post.data.slug ?? post.id.split('/').at(-1)) + '/'}>
                   <div class="writing-card__meta">
                     <time datetime={post.data.pubDate.toISOString()}>
                       {post.data.pubDate.toLocaleDateString('pt-BR', {
@@ -63,5 +68,5 @@ const description =
       </div>
     </section>
   </main>
-  <SiteFooter />
+  <SiteFooter locale="pt-BR" />
 </SiteLayout>

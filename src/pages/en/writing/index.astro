@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { siteConfig } from '../../../data/site';
+import { englishContent as content } from '../../../data/en';
+
+const posts = (await getCollection('writing', ({ data }) => data.draft !== true && data.locale === 'en'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const title = content.metadata.writingTitle;
+const description = content.metadata.writingDescription;
+const alternates = [
+  { locale: 'pt-BR' as const, url: siteConfig.domain + '/writing/' },
+  { locale: 'en' as const, url: siteConfig.domain + '/en/writing/' },
+];
+---
+
+<SiteLayout title={title} description={description} locale="en" alternates={alternates}>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <SiteHeader locale="en" languageHref="/writing/" />
+  <main id="main">
+    <section class="writing-page section-wrap" aria-labelledby="writing-title">
+      <div class="section-label"><span>01</span><span>{content.writing.sectionLabel}</span></div>
+      <div class="writing-page__content">
+        <p class="eyebrow">{content.writing.eyebrow}</p>
+        <h1 id="writing-title">{content.writing.title}<span aria-hidden="true">.</span></h1>
+        <p class="writing-page__intro">{content.writing.intro}</p>
+        {posts.length > 0 ? (
+          <div class="writing-list">
+            {posts.map((post) => (
+              <article class="writing-card">
+                <a class="writing-card__link" href={'/en/writing/' + (post.data.slug ?? post.id.split('/').at(-1)) + '/'}>
+                  <div class="writing-card__meta">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' })}
+                    </time>
+                    <span>{post.data.tags.join(' · ')}</span>
+                  </div>
+                  <h2>{post.data.title}<span aria-hidden="true">↗</span></h2>
+                  <p>{post.data.description}</p>
+                  <span class="writing-card__read">Read article <span aria-hidden="true">→</span></span>
+                </a>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="writing-empty">
+            <p class="eyebrow">{content.writing.emptyEyebrow}</p>
+            <h2>{content.writing.emptyTitle}</h2>
+            <p>{content.writing.emptyDescription}</p>
+            <a class="text-link" href="/#contact">{content.writing.connect} <span aria-hidden="true">↗</span></a>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+  <SiteFooter locale="en" />
+</SiteLayout>

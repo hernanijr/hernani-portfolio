@@ -1,15 +1,27 @@
 ---
-import type { projects } from '../data/site';
-
-type Project = (typeof projects)[number];
+interface Project {
+  name: string;
+  eyebrow: string;
+  summary: string;
+  challenge: string;
+  approach: string;
+  details: readonly { label: string; value: string }[];
+  engineering: string;
+  craftsmanship: string;
+  contribution: string;
+  website: string;
+  repository: string;
+}
 
 interface Props {
   project: Project;
   index: number;
   total: number;
+  locale?: 'pt-BR' | 'en';
 }
 
-const { project, index, total } = Astro.props;
+const { project, index, total, locale = 'pt-BR' } = Astro.props;
+const isEnglish = locale === 'en';
 ---
 
 <article class="project">
@@ -25,73 +37,65 @@ const { project, index, total } = Astro.props;
       <p class="project__summary">{project.summary}</p>
     </div>
     <div class="project__links">
-      <a
-        href={project.website}
-        target="_blank"
-        rel="noreferrer"
-        data-analytics-event="project_click"
-      >Visitar o site <span aria-hidden="true">↗</span></a>
-      <a
-        href={project.repository}
-        target="_blank"
-        rel="noreferrer"
-        data-analytics-event="project_click"
-      >Ver repositório <span aria-hidden="true">↗</span></a>
+      <a href={project.website} target="_blank" rel="noreferrer" data-analytics-event="project_click">
+        {isEnglish ? 'Visit website' : 'Visitar o site'} <span aria-hidden="true">↗</span>
+      </a>
+      <a href={project.repository} target="_blank" rel="noreferrer" data-analytics-event="project_click">
+        {isEnglish ? 'View repository' : 'Ver repositório'} <span aria-hidden="true">↗</span>
+      </a>
     </div>
   </div>
 
   <div class="project__visual">
-    <span class="project__visual-label">UMA BASE TÉCNICA, UM FLUXO EDITORIAL</span>
+    <span class="project__visual-label">{isEnglish ? 'A TECHNICAL FOUNDATION, AN EDITORIAL WORKFLOW' : 'UMA BASE TÉCNICA, UM FLUXO EDITORIAL'}</span>
     <div class="architecture">
       <div class="architecture__node architecture__node--organizers">
         <span>01</span>
-        <strong>Organizadores</strong>
-        <small>Conteúdo e eventos</small>
+        <strong>{isEnglish ? 'Organizers' : 'Organizadores'}</strong>
+        <small>{isEnglish ? 'Content and events' : 'Conteúdo e eventos'}</small>
       </div>
       <span class="architecture__connector" aria-hidden="true">→</span>
       <div class="architecture__node architecture__node--cms">
         <span>02</span>
-        <strong>CMS editorial</strong>
-        <small>Revisão no GitHub</small>
+        <strong>{isEnglish ? 'Editorial CMS' : 'CMS editorial'}</strong>
+        <small>{isEnglish ? 'GitHub review' : 'Revisão no GitHub'}</small>
       </div>
       <span class="architecture__connector" aria-hidden="true">→</span>
       <div class="architecture__node architecture__node--site">
         <span>03</span>
-        <strong>Site público</strong>
-        <small>Astro · estático</small>
+        <strong>{isEnglish ? 'Public website' : 'Site público'}</strong>
+        <small>{isEnglish ? 'Astro · static' : 'Astro · estático'}</small>
       </div>
     </div>
-    <span class="project__visual-footnote">Fluxo de publicação do Talk BH</span>
+    <span class="project__visual-footnote">{isEnglish ? 'Talk BH publishing workflow' : 'Fluxo de publicação do Talk BH'}</span>
   </div>
 
   <div class="project__details">
     <div class="project__narrative">
       <div>
-        <p class="eyebrow">O DESAFIO</p>
+        <p class="eyebrow">{isEnglish ? 'THE CHALLENGE' : 'O DESAFIO'}</p>
         <p>{project.challenge}</p>
       </div>
       <div>
-        <p class="eyebrow">A SOLUÇÃO</p>
+        <p class="eyebrow">{isEnglish ? 'THE SOLUTION' : 'A SOLUÇÃO'}</p>
         <p>{project.approach}</p>
       </div>
       <div>
-        <p class="eyebrow">DECISÕES DE ENGENHARIA</p>
+        <p class="eyebrow">{isEnglish ? 'ENGINEERING DECISIONS' : 'DECISÕES DE ENGENHARIA'}</p>
         <p>{project.engineering}</p>
       </div>
       <div>
-        <p class="eyebrow">ACABAMENTO TÉCNICO</p>
+        <p class="eyebrow">{isEnglish ? 'TECHNICAL CRAFT' : 'ACABAMENTO TÉCNICO'}</p>
         <p>{project.craftsmanship}</p>
       </div>
     </div>
     <dl class="project__stack">
-      {
-        project.details.map((detail) => (
-          <div>
-            <dt>{detail.label}</dt>
-            <dd>{detail.value}</dd>
-          </div>
-        ))
-      }
+      {project.details.map((detail) => (
+        <div>
+          <dt>{detail.label}</dt>
+          <dd>{detail.value}</dd>
+        </div>
+      ))}
     </dl>
   </div>
   <p class="project__attribution">{project.contribution}</p>

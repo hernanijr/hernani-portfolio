@@ -4,20 +4,39 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { siteConfig } from '../../data/site';
+import { getWritingPath, getWritingSlug } from '../../data/i18n';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('writing', ({ data }) => data.draft !== true);
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+  const allPosts = await getCollection('writing', ({ data }) => data.draft !== true);
+  const posts = allPosts.filter((post) => post.data.locale === 'pt-BR');
+
+  return posts.map((post) => {
+    const slug = getWritingSlug(post.id, post.data.slug);
+    const translated = allPosts.find((candidate) =>
+      candidate.data.locale === 'en' && getWritingSlug(candidate.id, candidate.data.slug) === slug
+    );
+    const alternateUrls = [
+      { locale: 'pt-BR' as const, url: siteConfig.domain + getWritingPath('pt-BR', slug) },
+      ...(translated ? [{ locale: 'en' as const, url: siteConfig.domain + getWritingPath('en', slug) }] : []),
+    ];
+
+    return {
+      params: { slug },
+      props: {
+        post,
+        languageHref: translated ? getWritingPath('en', slug) : '/en/writing/',
+        alternateUrls,
+      },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, languageHref, alternateUrls } = Astro.props;
 const { Content } = await render(post);
 const wordCount = (post.body ?? '').trim().split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.ceil(wordCount / 220));
-const canonicalUrl = new URL('/writing/' + post.id + '/', siteConfig.domain).href;
+const slug = getWritingSlug(post.id, post.data.slug);
+const canonicalUrl = new URL(getWritingPath('pt-BR', slug), siteConfig.domain).href;
 const dateModified = post.data.updatedDate ?? post.data.pubDate;
 
 const articleSchema = {
@@ -38,15 +57,9 @@ const articleSchema = {
 const title = post.data.title + ' | Hernani Junior';
 ---
 
-<SiteLayout
-  title={title}
-  description={post.data.description}
-  openGraphType="article"
-  articlePublishedTime={post.data.pubDate.toISOString()}
-  extraStructuredData={articleSchema}
->
+<SiteLayout title={title} description={post.data.description} locale="pt-BR" alternates={alternateUrls} openGraphType="article" articlePublishedTime={post.data.pubDate.toISOString()} extraStructuredData={articleSchema}>
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
-  <SiteHeader />
+  <SiteHeader locale="pt-BR" languageHref={languageHref} />
   <main id="main">
     <article class="writing-article-page section-wrap">
       <div class="writing-article">
@@ -57,34 +70,14 @@ const title = post.data.title + ' | Hernani Junior';
           <p class="writing-article__description">{post.data.description}</p>
           <div class="writing-article__meta">
             <time datetime={post.data.pubDate.toISOString()}>
-              Publicado em {post.data.pubDate.toLocaleDateString('pt-BR', {
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric',
-                timeZone: 'UTC',
-              })}
+              Publicado em {post.data.pubDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' })}
             </time>
             <span>{readingMinutes} min de leitura</span>
-            {post.data.updatedDate && (
-              <span>
-                Atualizado em {post.data.updatedDate.toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                  timeZone: 'UTC',
-                })}
-              </span>
-            )}
+            {post.data.updatedDate && <span>Atualizado em {post.data.updatedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' })}</span>}
           </div>
-          {post.data.tags.length > 0 && (
-            <ul class="writing-tags" aria-label="Assuntos do artigo">
-              {post.data.tags.map((tag) => <li>{tag}</li>)}
-            </ul>
-          )}
+          {post.data.tags.length > 0 && <ul class="writing-tags" aria-label="Assuntos do artigo">{post.data.tags.map((tag) => <li>{tag}</li>)}</ul>}
         </header>
-        <div class="writing-article__body">
-          <Content />
-        </div>
+        <div class="writing-article__body"><Content /></div>
         <footer class="writing-article__footer">
           <a class="text-link" href="/writing/">← Todos os artigos</a>
           <a class="text-link" href="/#contact">Contato profissional <span aria-hidden="true">↗</span></a>
@@ -92,5 +85,5 @@ const title = post.data.title + ' | Hernani Junior';
       </div>
     </article>
   </main>
-  <SiteFooter />
+  <SiteFooter locale="pt-BR" />
 </SiteLayout>

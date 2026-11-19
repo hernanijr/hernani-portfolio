@@ -1,23 +1,35 @@
 ---
 import { siteConfig } from '../data/site';
+import type { Locale } from '../data/i18n';
 
-const isWritingPage = Astro.url.pathname.startsWith('/writing/');
-const sectionHref = (id: string) => isWritingPage ? '/#' + id : '#' + id;
+interface Props {
+  locale?: Locale;
+  languageHref?: string;
+}
+
+const { locale = 'pt-BR', languageHref } = Astro.props;
+const isEnglish = locale === 'en';
+const isWritingPage = Astro.url.pathname.includes('/writing/');
+const prefix = isEnglish ? '/en/' : '/';
+const sectionHref = (id: string) => isWritingPage ? prefix + '#' + id : '#' + id;
+const writingHref = isEnglish ? '/en/writing/' : '/writing/';
+const switchHref = languageHref ?? (isEnglish ? '/' : '/en/');
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="wordmark" href="/#top">
+    <a class="wordmark" href={prefix + '#top'}>
       <span class="wordmark__symbol" aria-hidden="true">h.</span>
-      <span>{siteConfig.name}<small>ENGENHARIA DE SOFTWARE</small></span>
+      <span>{siteConfig.name}<small>{isEnglish ? 'SOFTWARE ENGINEERING' : 'ENGENHARIA DE SOFTWARE'}</small></span>
     </a>
-    <nav aria-label="Navegação principal">
-      <a href={sectionHref('about')}>Sobre</a>
-      <a href={sectionHref('experience')}>Experiência</a>
-      <a href={sectionHref('projects')}>Projetos</a>
-      <a href="/writing/" aria-current={isWritingPage ? 'page' : undefined}>Writing</a>
-      <a href={sectionHref('technology')}>Stack</a>
-      <a class="site-header__contact" href={sectionHref('contact')}>Contato <span aria-hidden="true">↗</span></a>
+    <nav aria-label={isEnglish ? 'Main navigation' : 'Navegação principal'}>
+      <a href={sectionHref('about')}>{isEnglish ? 'About' : 'Sobre'}</a>
+      <a href={sectionHref('experience')}>{isEnglish ? 'Experience' : 'Experiência'}</a>
+      <a href={sectionHref('projects')}>{isEnglish ? 'Projects' : 'Projetos'}</a>
+      <a href={writingHref} aria-current={isWritingPage ? 'page' : undefined}>Writing</a>
+      <a href={sectionHref('technology')}>{isEnglish ? 'Stack' : 'Stack'}</a>
+      <a class="site-header__contact" href={sectionHref('contact')}>{isEnglish ? 'Contact' : 'Contato'} <span aria-hidden="true">↗</span></a>
+      <a class="site-header__language" href={switchHref} lang={isEnglish ? 'pt-BR' : 'en'} aria-label={isEnglish ? 'PT — Ler este site em português' : 'EN — Read this website in English'}>{isEnglish ? 'PT' : 'EN'}</a>
     </nav>
   </div>
 </header>
