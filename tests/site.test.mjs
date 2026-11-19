@@ -53,8 +53,8 @@ test('profile offers professional contact links instead of client-acquisition CT
 
 test('featured work is curated without unfinished experiments', async () => {
   const html = await readOutput('index.html');
-  const indexLabels = [...html.matchAll(/<span class="project__index"[^>]*>([\\s\\S]*?)<\\/span>/g)]
-    .map(([, content]) => content.replace(/\\s+/g, ' ').trim());
+  const indexLabels = [...html.matchAll(/<span class="project__index"[^>]*>([\s\S]*?)<\/span>/g)]
+    .map(([, content]) => content.replace(/\s+/g, ' ').trim());
 
   assert.deepEqual(indexLabels, ['01 / 01']);
   assert.match(html, /Talk BH/);
