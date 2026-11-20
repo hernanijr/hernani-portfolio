@@ -5,7 +5,7 @@ export const englishContent = {
   metadata: {
     homeTitle: 'Hernani Junior — Software Engineer | Backend, APIs & Integrations',
     homeDescription:
-      'Software engineer based in Belo Horizonte, Brazil, focused on backend development, APIs, system integration, and reliable applications. Node.js, TypeScript, and NestJS.',
+      'Software engineer in Belo Horizonte, Brazil. Backend development, APIs, system integration, and reliable web applications. Node.js, TypeScript, and NestJS.',
     writingTitle: 'Writing | Hernani Junior — Software Engineering',
     writingDescription:
       'Articles, investigations, and lessons about software engineering, backend development, APIs, and system integration.',

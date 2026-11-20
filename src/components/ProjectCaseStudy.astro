@@ -37,10 +37,10 @@ const isEnglish = locale === 'en';
       <p class="project__summary">{project.summary}</p>
     </div>
     <div class="project__links">
-      <a href={project.website} target="_blank" rel="noreferrer" data-analytics-event="project_click">
+      <a href={project.website} target="_blank" rel="noopener noreferrer" data-analytics-event="project_click">
         {isEnglish ? 'Visit website' : 'Visitar o site'} <span aria-hidden="true">↗</span>
       </a>
-      <a href={project.repository} target="_blank" rel="noreferrer" data-analytics-event="project_click">
+      <a href={project.repository} target="_blank" rel="noopener noreferrer" data-analytics-event="project_click">
         {isEnglish ? 'View repository' : 'Ver repositório'} <span aria-hidden="true">↗</span>
       </a>
     </div>
