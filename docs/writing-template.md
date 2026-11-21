@@ -11,7 +11,7 @@ draft: true
 <!--
 Use como referência para artigos escritos diretamente em Markdown.
 No CMS, os mesmos metadados são preenchidos pelos campos do editor.
-Mantenha draft: true enquanto o texto não estiver pronto para publicação.
+Mantenha draft: true somente se quiser impedir a geração da página. A revisão normal deve acontecer em uma branch/PR; deixe draft: false para validar o artigo na prévia do site.
 -->
 
 ## Contexto

@@ -22,7 +22,7 @@ Each article stores the following frontmatter:
 - `pubDate`: publication date in `YYYY-MM-DD`.
 - `updatedDate`: optional date of the latest meaningful revision.
 - `tags`: optional list of topics.
-- `draft`: keep `true` while the text must remain unpublished; use `false` when it is ready for the public site.
+- `draft`: a separate static-site switch. Leave it `false` for normal articles so the article is rendered in the pull request preview; set it to `true` only when you intentionally want Astro to omit the page from archives, routes, and the sitemap, even after merge.
 - `locale`: managed automatically by the CMS collection (`pt-BR` or `en`).
 - `body`: Markdown article body, edited with the rich-text editor.
 
@@ -33,10 +33,11 @@ The `body` field is intentionally named `body`: Decap uses that name to write th
 The CMS uses Decap's editorial workflow:
 
 1. Create or edit an article in the correct language collection.
-2. Keep `draft: true` while the text is still being written. Draft articles are excluded from the public archive, static routes, and sitemap.
-3. Use the editorial workflow to submit the content for review. Decap stores the change in its Git workflow and opens a GitHub pull request for publication.
-4. Review the changed Markdown and the generated site preview. Check both language routes when editing a translation.
-5. Merge the content pull request when the article is ready. Cloudflare Workers Builds then rebuilds and deploys the static site.
+2. Use Decap's editorial stages (Draft → In review → Ready) while writing and reviewing. The unmerged content stays outside the production branch.
+3. Submit the entry for review. Decap stores the change in its Git workflow and opens a GitHub pull request.
+4. Keep the frontmatter field `draft` set to `false` for an ordinary article. This lets the Cloudflare pull request preview render the complete article page so you can review the real site layout. The Astro `draft` flag is not the Decap editorial status.
+5. Review the changed Markdown and the generated site preview. Check both language routes when editing a translation.
+6. Merge the content pull request when the article is ready. Cloudflare Workers Builds then rebuilds and deploys the static site.
 
 The CMS workflow is for content review; code changes continue to use the repository's normal pull-request process.
 
@@ -48,7 +49,7 @@ Images uploaded through the rich-text editor are stored in `public/images/writin
 
 ## Decap Turbo setup
 
-The CMS config includes a temporary `turbo_site_id` placeholder. After this code is merged into `main`:
+The CMS config includes a temporary `turbo_site_id` placeholder. The frontmatter `draft` field is off by default; use the CMS editorial workflow for writing/review stages. Only enable that field when you intentionally want Astro to omit an article page from the generated public site. After this code is merged into `main`:
 
 1. In Decap Turbo, open your organization and lock the old Talk BH site. Locking makes it read-only but frees the site slot without deleting the site record or touching the GitHub repository.
 2. Confirm the GitHub connection has access to `hernanijr/hernani-portfolio`.

@@ -205,6 +205,8 @@ test('Writing collection and authoring guide support drafts and localized articl
   assert.ok(cmsConfig.includes('folder: src/content/writing/en'));
   assert.ok(cmsConfig.includes('name: body'));
   assert.ok(cmsConfig.includes('widget: richtext'));
+  assert.ok(cmsConfig.includes('name: draft, widget: boolean, default: false'));
+  assert.ok(guide.includes('The Astro `draft` flag is not the Decap editorial status.'));
   assert.ok(cmsConfig.includes('sanitize_preview: true'));
 });
 

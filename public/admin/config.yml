@@ -40,7 +40,7 @@ collections:
         widget: list
         required: false
         field: { label: Assunto, name: tag, widget: string }
-      - { label: Rascunho (não publicar no site), name: draft, widget: boolean, default: true, required: true }
+      - { label: Ocultar do site público, name: draft, widget: boolean, default: false, required: true, hint: "Deixe desativado para revisar o artigo na prévia do PR. Ative apenas para impedir a geração da página mesmo depois do merge." }
       - { label: Idioma, name: locale, widget: hidden, default: "pt-BR" }
       - label: Conteúdo do artigo
         name: body
@@ -91,7 +91,7 @@ collections:
         widget: list
         required: false
         field: { label: Topic, name: tag, widget: string }
-      - { label: Draft (keep unpublished), name: draft, widget: boolean, default: true, required: true }
+      - { label: Hide from public site, name: draft, widget: boolean, default: false, required: true, hint: "Leave off to review the article in the pull request preview. Enable only to prevent page generation after merge." }
       - { label: Language, name: locale, widget: hidden, default: "en" }
       - label: Article content
         name: body

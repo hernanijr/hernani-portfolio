@@ -90,7 +90,7 @@ Add a selected case study to the `projects` array in `src/data/site.ts`. Provide
 
 ### Add a technical article
 
-Use the editor at `/admin/` to create or edit a Portuguese or English article. Decap writes Markdown into `src/content/writing/pt-BR/` or `src/content/writing/en/`; uploaded images are stored in `public/images/writing/`. Keep `draft: true` while writing and set it to `false` when an article is ready for publication. The editorial workflow creates a GitHub pull request before the content reaches production. See [the Writing guide](docs/writing.md).
+Use the editor at `/admin/` to create or edit a Portuguese or English article. Decap writes Markdown into `src/content/writing/pt-BR/` or `src/content/writing/en/`; uploaded images are stored in `public/images/writing/`. Use the Decap editorial workflow for writing and review; keep the frontmatter `draft` field `false` so the article appears in the pull request preview. Set it to `true` only to suppress the generated page intentionally. The editorial workflow creates a GitHub pull request before the content reaches production. See [the Writing guide](docs/writing.md).
 
 ### Update professional experience
 
