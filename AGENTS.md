@@ -14,6 +14,7 @@ The project currently uses:
 - Cloudflare Workers Static Assets for deployment.
 - GitHub Actions for pull-request and `main` validation.
 - Markdown content collections for the Writing section.
+- Decap CMS with Decap Turbo Free for the Writing editor; it manages Markdown and Git-backed article media only.
 
 The Astro configuration declares `pt-BR` as the default locale and `en` as an additional locale. Check the actual routes and content before assuming a page is fully translated.
 
@@ -46,7 +47,8 @@ When documentation and implementation disagree, inspect the implementation and u
 ## Architecture and dependency constraints
 
 - Preserve Astro static generation and the existing Cloudflare deployment model unless a concrete requirement justifies a change and it is approved.
-- Do not introduce a database, application server, CMS, paid service, analytics provider, or new dependency merely for convenience or trend alignment.
+- The approved Decap CMS + Decap Turbo Free integration is restricted to the Writing section. Do not add CMS-managed collections for other site content without a separate decision or enable a paid CMS/media plan.
+- Do not introduce a database, application server, paid service, analytics provider, or new dependency merely for convenience or trend alignment.
 - Prefer native HTML, Astro components, and existing project utilities over adding a UI framework or client-side JavaScript.
 - Keep content in the existing data modules and Markdown collections instead of duplicating it across components.
 - There is currently no analytics service configured. Preserve existing `data-analytics-event` identifiers when touching those links; do not start collecting visitor data without an explicitly approved provider, purpose, and privacy approach.
