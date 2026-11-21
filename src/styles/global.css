@@ -1395,6 +1395,78 @@ h2 em {
   font-size: 0.75rem;
 }
 
+.experience-disclosure {
+  margin-top: 0.85rem;
+}
+
+.experience-disclosure summary {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--green);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  list-style: none;
+}
+
+.experience-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.experience-disclosure summary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+}
+
+.experience-disclosure__label--open {
+  display: none;
+}
+
+.experience-disclosure[open] .experience-disclosure__label--closed {
+  display: none;
+}
+
+.experience-disclosure[open] .experience-disclosure__label--open {
+  display: inline;
+}
+
+.experience-disclosure__indicator {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-0.1rem) rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.experience-disclosure[open] .experience-disclosure__indicator {
+  transform: translateY(0.1rem) rotate(225deg);
+}
+
+.experience-disclosure__body {
+  max-width: 40rem;
+  padding-top: 0.95rem;
+}
+
+.experience-disclosure__body > p:not(.eyebrow) {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.experience-disclosure__body .eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.72rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-disclosure__indicator {
+    transition: none;
+  }
+}
+
 /* Writing archive and article pages */
 .site-header nav {
   scrollbar-width: none;

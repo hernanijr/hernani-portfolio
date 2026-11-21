@@ -76,6 +76,9 @@ test('homepage includes professional experience and all intended sections', asyn
   for (const company of ['FCamara', 'Loggi', 'Kunumi', 'Ecobonuz', 'Seedz', 'Montreal Informática']) {
     assert.ok(html.includes(company), 'Missing previous employer ' + company + '.');
   }
+  assert.match(html, /<details class="experience-disclosure">/);
+  assert.match(html, /Ver detalhes da experiência/);
+  assert.match(html, /Tecnologias utilizadas/);
   assert.ok(html.includes('href="/writing/">Writing'));
   assert.match(html, new RegExp('<a[^>]+href="/en/"[^>]*>EN</a>'));
   assert.match(html, /aria-label="EN — Read this website in English"/);
@@ -93,6 +96,9 @@ test('English homepage contains all major sections and translated calls to actio
   assert.match(html, /Skip to content/);
   assert.match(html, /THE CHALLENGE/);
   assert.match(html, /ENGINEERING DECISIONS/);
+  assert.match(html, /<details class="experience-disclosure">/);
+  assert.match(html, /View experience details/);
+  assert.match(html, /Technologies used/);
 });
 
 test('structured data identifies the professional profile and public destinations', async () => {

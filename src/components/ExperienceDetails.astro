@@ -1,0 +1,37 @@
+---
+interface Props {
+  locale: 'pt-BR' | 'en';
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  technologies: readonly string[];
+}
+
+const { locale, company, role, period, description, technologies } = Astro.props;
+const labels = locale === 'en'
+  ? { expand: 'View experience details', collapse: 'Hide experience details', technologies: 'Technologies used' }
+  : { expand: 'Ver detalhes da experiência', collapse: 'Ocultar detalhes da experiência', technologies: 'Tecnologias utilizadas' };
+---
+
+<article class="experience-item">
+  <p class="experience-item__period">{period}</p>
+  <div class="experience-item__content">
+    <p class="eyebrow">{role}</p>
+    <h3>{company}</h3>
+    <details class="experience-disclosure">
+      <summary>
+        <span class="experience-disclosure__label experience-disclosure__label--closed">{labels.expand}</span>
+        <span class="experience-disclosure__label experience-disclosure__label--open">{labels.collapse}</span>
+        <span class="experience-disclosure__indicator" aria-hidden="true"></span>
+      </summary>
+      <div class="experience-disclosure__body">
+        <p>{description}</p>
+        <p class="eyebrow">{labels.technologies}</p>
+        <ul aria-label={labels.technologies}>
+          {technologies.map((technology) => <li>{technology}</li>)}
+        </ul>
+      </div>
+    </details>
+  </div>
+</article>

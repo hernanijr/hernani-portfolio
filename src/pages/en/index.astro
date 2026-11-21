@@ -1,4 +1,5 @@
 ---
+import ExperienceDetails from '../../components/ExperienceDetails.astro';
 import ProjectCaseStudy from '../../components/ProjectCaseStudy.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
@@ -64,17 +65,14 @@ const alternates = [
           </div>
           <p>{content.home.experienceIntro}</p>
         </div>
-        <article class="experience-item">
-          <p class="experience-item__period">{content.home.currentPeriod}</p>
-          <div class="experience-item__content">
-            <p class="eyebrow">{content.home.currentRole}</p>
-            <h3>Grupo Boticário</h3>
-            <p>{content.home.currentDescription}</p>
-            <ul aria-label={content.home.technologiesUsed}>
-              {['Node.js', 'TypeScript', 'NestJS', 'React'].map((technology) => <li>{technology}</li>)}
-            </ul>
-          </div>
-        </article>
+        <ExperienceDetails
+          locale="en"
+          company="Grupo Boticário"
+          role={content.home.currentRole}
+          period={content.home.currentPeriod}
+          description={content.home.currentDescription}
+          technologies={['Node.js', 'TypeScript', 'NestJS', 'React']}
+        />
         <div class="experience-previous">
           <p class="eyebrow">{content.home.previousExperience}</p>
           <ul>
