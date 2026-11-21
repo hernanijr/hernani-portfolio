@@ -49,17 +49,16 @@ Images uploaded through the rich-text editor are stored in `public/images/writin
 
 ## Decap Turbo setup
 
-The CMS config includes a temporary `turbo_site_id` placeholder. The frontmatter `draft` field is off by default; use the CMS editorial workflow for writing/review stages. Only enable that field when you intentionally want Astro to omit an article page from the generated public site. After this code is merged into `main`:
+The Hernani.dev site has already been created in the existing Decap Turbo organization. Its Site ID is configured in `public/admin/config.yml` on the CMS implementation branch. The Turbo dashboard reads the config from `main`, so its status may remain **Couldn't check** until this pull request is merged and deployed.
 
-1. In Decap Turbo, open your organization and lock the old Talk BH site. Locking makes it read-only but frees the site slot without deleting the site record or touching the GitHub repository.
-2. Confirm the GitHub connection has access to `hernanijr/hernani-portfolio`.
-3. Create a site with provider **GitHub**, repository `hernanijr/hernani-portfolio`, branch `main`, config path `public/admin/config.yml`, and admin URL `https://hernani.dev/admin/`.
-4. Copy the Site ID from the new site's Overview page.
-5. Replace `SET_AFTER_CREATING_HERNANI_DEV_SITE` in `public/admin/config.yml` with that UUID in a follow-up pull request. The UUID is an identifier, not a credential.
-6. After the follow-up change is deployed, open `https://hernani.dev/admin/` and sign in with Decap Turbo.
+After merging:
 
-Keep the organization on Free. Do not activate the Pro trial, add a paid seat, or enable the paid media library. The Free tier has one site and one seat; a manually locked site does not count against the site limit.
+1. In the Turbo site's Overview, confirm the repository is `hernanijr/hernani-portfolio`, branch is `main`, config path is `public/admin/config.yml`, and the admin interface URL is `https://hernani.dev/admin/`.
+2. Reload or save the site settings so Turbo can read the config from `main`.
+3. Open [https://hernani.dev/admin/](https://hernani.dev/admin/) and verify that the Decap Turbo sign-in flow loads.
+4. Create a test article in a Draft state and confirm Decap creates the expected Git-backed change/PR. Do not merge test content just to validate the editor.
 
+Keep the organization on Free. Do not activate the Pro trial, add a paid seat, or enable the paid media library. The Free plan is intended for this single-site, single-seat setup.
 ## Manual Markdown fallback
 
 You can still author an article directly in the repository:
