@@ -218,7 +218,8 @@ test('Decap admin is version-pinned, noindex, and limited to the Writing collect
   assert.match(admin, /name="robots" content="noindex, nofollow, noarchive"/);
   assert.ok(admin.includes('decap-cms@3.18.0/dist/decap-cms.js'));
   assert.ok(cmsConfig.includes('name: turbo-github'));
-  assert.ok(cmsConfig.includes('turbo_site_id: SET_AFTER_CREATING_HERNANI_DEV_SITE'));
+  assert.match(cmsConfig, /turbo_site_id: [0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i);
+  assert.doesNotMatch(cmsConfig, /SET_AFTER_CREATING_HERNANI_DEV_SITE/);
   assert.ok(cmsConfig.includes('publish_mode: editorial_workflow'));
   assert.ok(cmsConfig.includes('media_folder: public/images/writing'));
   assert.ok(cmsConfig.includes('public_folder: /images/writing'));
