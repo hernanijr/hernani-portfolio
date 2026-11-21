@@ -1,4 +1,5 @@
 ---
+import ExperienceDetails from '../components/ExperienceDetails.astro';
 import ProjectCaseStudy from '../components/ProjectCaseStudy.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -70,7 +71,6 @@ const alternates = [
       </div>
     </section>
 
-
     <section class="experience section-wrap" id="experience" aria-labelledby="experience-title">
       <div class="section-label"><span>02</span><span>EXPERIÊNCIA</span></div>
       <div class="experience__content">
@@ -81,17 +81,14 @@ const alternates = [
           </div>
           <p>Atuação profissional em desenvolvimento de aplicações e serviços, com foco em backend e experiência complementar em frontend.</p>
         </div>
-        <article class="experience-item">
-          <p class="experience-item__period">{professionalExperience.current.period}</p>
-          <div class="experience-item__content">
-            <p class="eyebrow">{professionalExperience.current.role}</p>
-            <h3>{professionalExperience.current.company}</h3>
-            <p>{professionalExperience.current.description}</p>
-            <ul aria-label="Tecnologias utilizadas">
-              {professionalExperience.current.technologies.map((technology) => <li>{technology}</li>)}
-            </ul>
-          </div>
-        </article>
+        <ExperienceDetails
+          locale="pt-BR"
+          company={professionalExperience.current.company}
+          role={professionalExperience.current.role}
+          period={professionalExperience.current.period}
+          description={professionalExperience.current.description}
+          technologies={professionalExperience.current.technologies}
+        />
         <div class="experience-previous">
           <p class="eyebrow">EXPERIÊNCIAS ANTERIORES</p>
           <ul>
@@ -140,8 +137,6 @@ const alternates = [
         <ProjectCaseStudy project={project} index={index + 1} total={projects.length} locale="pt-BR" />
       ))}
     </section>
-
-
 
     <section class="technology section-wrap" id="technology" aria-labelledby="technology-title">
       <div class="section-label"><span>05</span><span>STACK E PRÁTICAS</span></div>
