@@ -2,7 +2,7 @@ backend:
   name: turbo-github
   # Create the Hernani.dev site in Decap Turbo, then replace this placeholder
   # with the UUID shown on its Overview tab. This is an identifier, not a secret.
-  turbo_site_id: SET_AFTER_CREATING_HERNANI_DEV_SITE
+  turbo_site_id: d3afdcc6-f4e5-4b1a-92ce-3cc81e7b4b04
   branch: main
 
 publish_mode: editorial_workflow
