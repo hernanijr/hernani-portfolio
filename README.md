@@ -13,6 +13,14 @@ All published page content is written in Brazilian Portuguese. Code, identifiers
 
 The site does not require a database, application server, analytics service, or paid hosting subscription.
 
+## Project guidance
+
+- [`AGENTS.md`](AGENTS.md) contains the repository context, engineering constraints, design guardrails, and validation workflow for coding agents.
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) records the high-level product direction, approved work, and ideas that remain exploratory.
+- [`docs/writing.md`](docs/writing.md) explains the Markdown-based technical writing workflow.
+
+GitHub Issues remain the source of truth for implementation details, acceptance criteria, and task status. The roadmap is intentionally a high-level summary rather than a duplicate task tracker.
+
 ## Architecture
 
 - `src/data/site.ts` centralizes profile details, contact links, technical focus areas, technologies, selected case studies, and experiments.
