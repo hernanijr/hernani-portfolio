@@ -11,7 +11,10 @@ const writing = defineCollection({
     title: z.string().min(1),
     description: z.string().min(1),
     pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
+    updatedDate: z.preprocess(
+      (value) => value === '' ? undefined : value,
+      z.coerce.date().optional(),
+    ),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     locale: z.enum(['pt-BR', 'en']).default('pt-BR'),

@@ -1,0 +1,118 @@
+backend:
+  name: turbo-github
+  # Create the Hernani.dev site in Decap Turbo, then replace this placeholder
+  # with the UUID shown on its Overview tab. This is an identifier, not a secret.
+  turbo_site_id: SET_AFTER_CREATING_HERNANI_DEV_SITE
+  branch: main
+
+publish_mode: editorial_workflow
+locale: pt
+site_url: https://hernani.dev
+display_url: https://hernani.dev
+logo_url: /favicon.svg
+
+media_folder: public/images/writing
+public_folder: /images/writing
+
+collections:
+  - name: writing_pt
+    label: Writing — Português
+    label_singular: Artigo em português
+    folder: src/content/writing/pt-BR
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    slug_collision: reject
+    preview_path: "writing/{{slug}}/"
+    sortable_fields:
+      - field: pubDate
+        label: Data de publicação
+        default_sort: desc
+      - title
+    fields:
+      - { label: Título, name: title, widget: string, required: true }
+      - { label: Descrição, name: description, widget: text, required: true, hint: "Resumo exibido no arquivo de artigos e nos metadados de busca." }
+      - { label: Data de publicação, name: pubDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, default: "{{now}}", required: true }
+      - { label: Data de atualização, name: updatedDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
+      - label: Assuntos
+        name: tags
+        widget: list
+        required: false
+        field: { label: Assunto, name: tag, widget: string }
+      - { label: Rascunho (não publicar no site), name: draft, widget: boolean, default: true, required: true }
+      - { label: Idioma, name: locale, widget: hidden, default: "pt-BR" }
+      - label: Conteúdo do artigo
+        name: body
+        widget: richtext
+        required: true
+        sanitize_preview: true
+        buttons:
+          - bold
+          - italic
+          - strikethrough
+          - code
+          - link
+          - heading-two
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - image
+          - code-block
+        modes:
+          - rich_text
+          - raw
+
+  - name: writing_en
+    label: Writing — English
+    label_singular: English article
+    folder: src/content/writing/en
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    slug_collision: reject
+    preview_path: "en/writing/{{slug}}/"
+    sortable_fields:
+      - field: pubDate
+        label: Publication date
+        default_sort: desc
+      - title
+    fields:
+      - { label: Title, name: title, widget: string, required: true }
+      - { label: Description, name: description, widget: text, required: true, hint: "Summary shown in the Writing archive and search metadata." }
+      - { label: Publication date, name: pubDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, default: "{{now}}", required: true }
+      - { label: Updated date, name: updatedDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
+      - label: Topics
+        name: tags
+        widget: list
+        required: false
+        field: { label: Topic, name: tag, widget: string }
+      - { label: Draft (keep unpublished), name: draft, widget: boolean, default: true, required: true }
+      - { label: Language, name: locale, widget: hidden, default: "en" }
+      - label: Article content
+        name: body
+        widget: richtext
+        required: true
+        sanitize_preview: true
+        buttons:
+          - bold
+          - italic
+          - strikethrough
+          - code
+          - link
+          - heading-two
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - image
+          - code-block
+        modes:
+          - rich_text
+          - raw
