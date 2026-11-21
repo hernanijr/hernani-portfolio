@@ -9,6 +9,7 @@ All published page content is written in Brazilian Portuguese. Code, identifiers
 - Astro and TypeScript for a statically generated site.
 - Tailwind CSS 4 and project-specific CSS for the visual system.
 - Cloudflare Workers Static Assets for deployment.
+- Decap CMS with Decap Turbo Free for technical article authoring; articles remain Markdown files in GitHub.
 - GitHub Actions for validation on pull requests and pushes to `main`.
 
 The site does not require a database, application server, analytics service, or paid hosting subscription.
@@ -17,7 +18,7 @@ The site does not require a database, application server, analytics service, or 
 
 - [`AGENTS.md`](AGENTS.md) contains the repository context, engineering constraints, design guardrails, and validation workflow for coding agents.
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) records the high-level product direction, approved work, and ideas that remain exploratory.
-- [`docs/writing.md`](docs/writing.md) explains the Markdown-based technical writing workflow.
+- [`docs/writing.md`](docs/writing.md) explains the technical writing workflow and Decap CMS setup.
 
 GitHub Issues remain the source of truth for implementation details, acceptance criteria, and task status. The roadmap is intentionally a high-level summary rather than a duplicate task tracker.
 
@@ -28,7 +29,7 @@ GitHub Issues remain the source of truth for implementation details, acceptance 
 - `src/components/ProjectCaseStudy.astro` renders project data so future case studies can be added without rebuilding the page structure.
 - `src/layouts/SiteLayout.astro` provides document metadata, canonical URLs, Open Graph and Twitter metadata, and Person structured data.
 - `src/styles/global.css` contains the responsive design system, accessibility states, and reduced-motion behavior.
-- `src/content.config.ts` defines the typed Markdown Writing collection in `src/content/writing/`. `src/pages/sitemap.xml.ts` includes the homepage, Writing archive, and published articles; `public/robots.txt` points crawlers to it.
+- `src/content.config.ts` defines the typed Markdown Writing collection in `src/content/writing/`. Decap's admin UI and GitHub/Turbo configuration live in `public/admin/`. `src/pages/sitemap.xml.ts` includes the homepage, Writing archive, and published articles; `public/robots.txt` points crawlers to it.
 - `wrangler.jsonc` configures the `dist` directory as Cloudflare static assets.
 
 The architecture uses explicit route files and content modules. The public site is currently written in Brazilian Portuguese; an English version can be added as a separate localization task.
@@ -89,7 +90,7 @@ Add a selected case study to the `projects` array in `src/data/site.ts`. Provide
 
 ### Add a technical article
 
-Write articles as Markdown files in `src/content/writing/`. The filename becomes the public URL slug. Required frontmatter fields are `title`, `description`, and `pubDate`; optional fields include `updatedDate`, `tags`, and `draft`. Set `draft: true` to keep an article out of the public site and sitemap. See [the Writing guide](docs/writing.md).
+Use the editor at `/admin/` to create or edit a Portuguese or English article. Decap writes Markdown into `src/content/writing/pt-BR/` or `src/content/writing/en/`; uploaded images are stored in `public/images/writing/`. Use the Decap editorial workflow for writing and review; keep the frontmatter `draft` field `false` so the article appears in the pull request preview. Set it to `true` only to suppress the generated page intentionally. The editorial workflow creates a GitHub pull request before the content reaches production. See [the Writing guide](docs/writing.md).
 
 ### Update professional experience
 

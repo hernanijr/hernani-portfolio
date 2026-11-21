@@ -1,15 +1,17 @@
 ---
 title: "Título do artigo"
 description: "Resumo curto do que o artigo explica e por que o assunto importa."
-pubDate: 2026-11-17
+pubDate: 2026-11-21
+locale: pt-BR
 tags:
   - Backend
 draft: true
 ---
 
 <!--
-Copie este arquivo para um novo slug, substitua os metadados e escreva o artigo.
-Mantenha draft: true enquanto o texto não estiver pronto para publicação.
+Use como referência para artigos escritos diretamente em Markdown.
+No CMS, os mesmos metadados são preenchidos pelos campos do editor.
+Mantenha draft: true somente se quiser impedir a geração da página. A revisão normal deve acontecer em uma branch/PR; deixe draft: false para validar o artigo na prévia do site.
 -->
 
 ## Contexto

@@ -192,14 +192,43 @@ test('Writing archives are generated in both locales without placeholder article
 test('Writing collection and authoring guide support drafts and localized articles', async () => {
   const config = await readFile(new URL('../src/content.config.ts', import.meta.url), 'utf8');
   const guide = await readFile(new URL('../docs/writing.md', import.meta.url), 'utf8');
+  const cmsConfig = await readOutput('admin/config.yml');
 
   assert.ok(config.includes("base: './src/content/writing'"));
   assert.ok(config.includes('draft: z.boolean().default(false)'));
   assert.ok(config.includes("locale: z.enum(['pt-BR', 'en']).default('pt-BR')"));
   assert.ok(config.includes('slug: z.string()'));
+  assert.ok(config.includes("value === '' ? undefined : value"));
   assert.ok(guide.includes('src/content/writing/en/'));
-  assert.ok(guide.includes('locale: en'));
-  assert.ok(guide.includes('There is no CMS, database, newsletter provider, or paid publishing service'));
+  assert.ok(guide.includes('draft: true'));
+  assert.ok(cmsConfig.includes('folder: src/content/writing/pt-BR'));
+  assert.ok(cmsConfig.includes('folder: src/content/writing/en'));
+  assert.ok(cmsConfig.includes('name: body'));
+  assert.ok(cmsConfig.includes('widget: richtext'));
+  assert.ok(cmsConfig.includes('name: draft, widget: boolean, default: false'));
+  assert.ok(guide.includes('The Astro `draft` flag is not the Decap editorial status.'));
+  assert.ok(cmsConfig.includes('sanitize_preview: true'));
+});
+
+test('Decap admin is version-pinned, noindex, and limited to the Writing collections', async () => {
+  const admin = await readOutput('admin/index.html');
+  const cmsConfig = await readOutput('admin/config.yml');
+  const headers = await readOutput('_headers');
+
+  assert.match(admin, /name="robots" content="noindex, nofollow, noarchive"/);
+  assert.ok(admin.includes('decap-cms@3.18.0/dist/decap-cms.js'));
+  assert.ok(cmsConfig.includes('name: turbo-github'));
+  assert.match(cmsConfig, /turbo_site_id: [0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i);
+  assert.doesNotMatch(cmsConfig, /SET_AFTER_CREATING_HERNANI_DEV_SITE/);
+  assert.ok(cmsConfig.includes('publish_mode: editorial_workflow'));
+  assert.ok(cmsConfig.includes('media_folder: public/images/writing'));
+  assert.ok(cmsConfig.includes('public_folder: /images/writing'));
+  assert.ok(cmsConfig.includes('name: writing_pt'));
+  assert.ok(cmsConfig.includes('name: writing_en'));
+  assert.ok(headers.includes('/admin/*'));
+  assert.ok(headers.includes('X-Robots-Tag: noindex, nofollow'));
+  assert.ok(headers.includes('https://cdn.jsdelivr.net'));
+  assert.ok(headers.includes('https://sb.decapcms.org'));
 });
 
 test('Cloudflare static assets include security headers and keep workers.dev previews out of search', async () => {
